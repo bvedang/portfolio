@@ -4,8 +4,9 @@ import PortfolioItems from './PortfolioItems';
 
 export default function Portfolio() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="h-screen flex relative overflow-hidden flex-col text-lft md:flex-row max-w-full p-10 justify-evenly mx-auto items-center">
+      
+      <div className='w-full flex space-x-5 overflow-x-scroll p-10 snap-x snap-mandatory'>
         {portfolio.map(project => (
           <PortfolioItems
             key={project.title}

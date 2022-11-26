@@ -2,16 +2,9 @@ import React from 'react';
 
 export default function Intro() {
   return (
-    <div className="flex items-center justify-center flex-col text-center pt-20 pb-10">
-      <h1 className="text-4xl md:text-7xl mb-2 md:mb-4 font-bold">
-        Vedang Barhate
-      </h1>
-      <p className="text-base md:text-xl mb-4 font-medium">
-        Wannabe Software Enginner & Grad-Student
-      </p>
+    <div className="flex items-center justify-center relative h-screen flex-col text-center justify-evenly">
+      <h3 className="absolute top-24 uppercase tracking-[20px] text-stone-400 text-2xl">About</h3>
       <p className="text-sm max-w-xl mb-6 font-bold">
-        Your bio
-        <br/>
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
