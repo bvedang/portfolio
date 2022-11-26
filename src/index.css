@@ -4,6 +4,6 @@
 
 @layer components {
   .heroNav {
-    @apply px-6 py-2 border border-[#242424] rounded-full uppercase text-xs tracking-widest text-stone-600 transition-all hover:border-stone-400 transition-all hover:border-[#f7ab0a]/40 hover:text-[#f7ab0a]/40;
+    @apply px-6 py-2 border rounded-full uppercase text-xs tracking-widest text-slate-500 dark:text-white  transition-all dark:border-stone-400 transition-all hover:border-slate-700 hover:text-black hover:dark:border-[#f7ab0a]/40 hover:dark:text-[#f7ab0a]/40 z-10 hover:animate-pulse;
   }
 }

@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Intro() {
   return (
-    <div className="flex items-center justify-center relative h-screen flex-col text-center justify-evenly">
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-stone-400 text-2xl">About</h3>
+    <div className="flex items-center justify-center h-screen relative flex-col text-center justify-evenly">
+      <h3 className="absolute top-24 uppercase tracking-[20px] dark:text-white text-black text-2xl">About</h3>
       <p className="text-sm max-w-xl mb-6 font-bold">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim

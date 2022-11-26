@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion';
 import React from 'react';
-import { useEffect, useState } from 'react';
+import EmailIcon from './EmailIcon';
 import SocialIcons from './SocialIcons';
 
-function Header({ theme, handleThemeSwitch,dark }) {
-  
-
+function Header({ theme, handleThemeSwitch, dark }) {
   const sun = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +38,7 @@ function Header({ theme, handleThemeSwitch,dark }) {
   );
   return (
     // {/*Add shadow to the bottom of the header*/}
-    <header className="sticky top-0 p-5 flex items-start justify-between max-w-7xl mx-auto z-20 xl:items-center bg-white dark:bg-stone-900">
+    <header className="sticky top-0 p-4 flex items-start justify-between max-w-7xl mx-auto z-20 xl:items-center bg-white dark:bg-stone-900">
       <motion.div
         initial={{ x: -500, opacity: 0, scale: 0.5 }}
         animate={{ x: 0, opacity: 1, scale: 1 }}
@@ -81,13 +79,9 @@ function Header({ theme, handleThemeSwitch,dark }) {
         >
           {theme === dark ? sun : moon}
         </button>
-        <SocialIcons
-          theme={theme}
-          dark={dark}
-          url="https://www.linkedin.com/in/vedang-barhate17/"
-        />
+        <EmailIcon theme={theme} dark={dark} />
         <p className="uppercase hidden md:inline-flex text-sm text-black dark:text-white">
-          Get in Touch
+          <a href='#contact'>Get in Touch</a>
         </p>
       </motion.div>
     </header>

@@ -42,7 +42,7 @@ export default function Hero({ theme, dark }) {
             <a href="#projects">Projects</a>
           </button>
           <button className="heroNav">
-            <a href="#skills">Skills</a>
+            <a href="#skills">Resume</a>
           </button>
         </div>
       </div>

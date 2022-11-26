@@ -6,6 +6,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import ToTop from './components/ToTop';
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -42,15 +43,18 @@ function App() {
           <section id="hero" className="snap-start">
             <Hero theme={theme} dark={dark} />
           </section>
-          <section id="about" className="snap-center">
+          <section id="about" className="h-screen snap-center">
             <Intro />
           </section>
 
-          <section id="projects" className="snap-center">
+          <section id="projects" className="snap-center ">
             <Portfolio />
           </section>
           <Timeline />
-          <Contact />
+          <section id="contact">
+            <Contact />
+          </section>
+          <ToTop />
           <Footer />
         </div>
       </div>

@@ -3,8 +3,10 @@ import React from 'react';
 
 export default function PortfolioItems({ title, imageUrl, techStack, link }) {
   return (
-    <article className='flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 w-[500px] md:w-[600px] xl:w-[900px] snap-center bg-stone-800
-    p-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden'>
+    <article
+      className="flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 w-[500px] md:w-[600px] xl:w-[900px] snap-center bg-[#f5f5f4] dark:bg-stone-800
+    p-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden "
+    >
       <motion.img
         initial={{
           y: -100,
@@ -17,16 +19,14 @@ export default function PortfolioItems({ title, imageUrl, techStack, link }) {
         src="/assets/812.jpg"
         alt=""
       />
-      <div className='px-4 md:p-10'>
-        <h4 className='text-4xl font-light'>
-          {title}
-        </h4>
-        <p className='font=bold text-2xl mt-1'>Domain</p>
-        <div>
-          {/* Capsules of Tech */}
-        </div>
-        <p className='uppercase py-5 text-stone-400'>Dates</p>
-        <ul className='list-disc space-y-4 ml-5 text-lg'>
+      <div className="px-4 md:p-10">
+        <h4 className="text-4xl">{title}</h4>
+        <p className="font=bold text-2xl mt-1">Domain</p>
+        <div>{/* Capsules of Tech */}</div>
+        <p className="uppercase py-5 text-slate-900 dark:text-stone-400">
+          Dates
+        </p>
+        <ul className="list-disc space-y-4 ml-5 text-lg">
           <li>Summary Points</li>
           <li>Summary Points</li>
           <li>Summary Points</li>
