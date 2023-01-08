@@ -27,7 +27,7 @@ export default function Hero({ theme, dark }) {
         className="mx-auto relative rounded-full h-32 w-32 object-cover"
       />
       <div className="z-20">
-        <h2 className="text-sm uppercase text-stone-400 pb-2 tracking-[12-x">
+        <h2 className="text-sm uppercase text-gray-700 dark:text-stone-400 pb-2 tracking-[12-x">
           Aspiring Software Engineer
         </h2>
         <h1 className="text-3xl md:text-4xl dark:text-white font-semibold px-10">

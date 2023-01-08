@@ -1,0 +1,132 @@
+.project-container {
+  max-width: 75rem;
+  padding: 1.5rem;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.5s;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px -15px #1c1917;
+}
+
+.project:hover {
+  transform: translateY(-0.5%);
+  box-shadow: 0 20px 30px -15x #1c1917;
+}
+
+.project-text-box {
+  padding: 2rem;
+  grid-column: span 6;
+}
+
+.project-img-box {
+  display: flex;
+  grid-column: span 4;
+}
+
+.heading-secondary {
+  font-size: 2.25rem;
+  line-height: 1.2;
+  margin-bottom: 4.5rem;
+}
+
+.project-desc {
+  font-size: 1.12rem;
+  line-height: 1.6;
+  margin-bottom: 4.8rem;
+}
+
+.project-desc p {
+  font-size: 1rem;
+}
+
+.heading-tertiary {
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: lighter;
+}
+
+.tech-stack-heading {
+  display: flex;
+  justify-content: end;
+  font-size: 0.75rem;
+  border: none;
+}
+
+.project-tech-stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.62rem;
+  justify-content: flex-end;
+}
+.tech-stack-items {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  border: 1px solid #d6d3d1;
+  border-radius: 100rem;
+}
+
+.project-img {
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (max-width: 40em) {
+  .heading-secondary {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .project-desc {
+    font-size: 1rem;
+  }
+
+  .project-desc p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 47em) {
+  .heading-secondary {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .project-desc {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 47em) {
+  .project {
+    grid-template-columns: 1fr;
+  }
+
+  .project-text-box,
+  .project-img-box {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .project-text-box {
+    background: none;
+    opacity: 1;
+  }
+
+  .project-img-box {
+    opacity: 0.1;
+  }
+}

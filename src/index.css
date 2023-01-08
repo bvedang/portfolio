@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  scroll-behavior: smooth;
+}
+
 @layer components {
   .heroNav {
-    @apply px-6 py-2 border rounded-full uppercase text-xs tracking-widest text-slate-500 dark:text-white  transition-all dark:border-stone-400 transition-all hover:border-slate-700 hover:text-black hover:dark:border-[#f7ab0a]/40 hover:dark:text-[#f7ab0a]/40 z-10 hover:animate-pulse;
+    @apply mx-1 px-6 py-2 border border-gray-400 rounded-full uppercase text-xs tracking-widest text-gray-700 dark:text-stone-200 transition-all dark:border-stone-400 transition-all hover:-translate-y-px hover:bg-stone-100 hover:text-black hover:dark:bg-stone-800  z-10 hover:animate-pulse;
   }
 }
