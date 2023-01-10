@@ -6,10 +6,14 @@ import MaterialUiIcon from './techIcons/MaterialUiIcon';
 import TensorflowIcon from './techIcons/TensorflowIcon';
 import PandasIcon from './techIcons/PandasIcon';
 import NumpyIcon from './techIcons/NumpyIcon';
+import Title from './Title';
 
 function Project() {
   return (
     <div className={[styles.projectContainer, 'mx-auto my-20'].join(' ')}>
+      <div className="flex items-end justify-center md:mt-32 sm:mt-20 mt-16">
+        <Title> Projects</Title>
+      </div>
       <div
         className={[
           styles.project,
