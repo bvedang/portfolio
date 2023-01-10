@@ -89,7 +89,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/expenseManager.jpg"
+            src="../../public/expenseManager.jpg"
             alt="Project Image"
           />
         </div>
@@ -103,7 +103,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/microService.jpg"
+            src="../../public/microService.jpg"
             alt="Project Image"
           />
         </div>
@@ -226,7 +226,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/nlp.png"
+            src="../../public/nlp.png"
             alt="Project Image"
           />
         </div>
