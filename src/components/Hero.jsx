@@ -22,7 +22,7 @@ export default function Hero({ theme, dark }) {
     <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
       <BackgroundCircles />
       <img
-        src="../../public/heroImage.jpg"
+        src="../assets/heroImage.jpg"
         alt=""
         className="mx-auto relative rounded-full h-32 w-32 object-cover"
       />
