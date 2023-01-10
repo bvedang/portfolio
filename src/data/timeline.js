@@ -1,37 +1,30 @@
 export default [
   {
     year: 'Today',
-    title: 'Graduate Student',
+    title: 'Pursuing Master in Computer Science',
     duration: '2 Years',
     details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra adipiscing at in tellus integer feugiat. Fermentum iaculis eu non diam phasellus vestibulum lorem. Morbi tempus iaculis urna id volutpat lacus laoreet. Viverra aliquet eget sit amet tellus cras. Sit amet mattis vulputate enim nulla aliquet porttitor lacus. Eu lobortis elementum nibh tellus molestie nunc non. Magna eget est lorem ipsum dolor sit amet consectetur.',
+      "I considered pursuing advanced study in the US to learn more about computer science. I learnt a lot of advanced subjects while obtaining my master's degree at the Illinois Institute of Technology in Chicago, including machine learning, advanced database organization, mobile application development, etc.",
   },
   {
     year: '2020',
-    title: 'Graduate Student',
-    duration: '2 Years',
+    title: 'Software Engineer',
+    duration: '1 Year',
     details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra adipiscing at in tellus integer feugiat. Fermentum iaculis eu non diam phasellus vestibulum lorem. Morbi tempus iaculis urna id volutpat lacus laoreet. Viverra aliquet eget sit amet tellus cras. Sit amet mattis vulputate enim nulla aliquet porttitor lacus. Eu lobortis elementum nibh tellus molestie nunc non. Magna eget est lorem ipsum dolor sit amet consectetur.',
+      'Built an inventory tracking system for a small business. JavaScript, Python, Flask, React, Restful API, PostgreSQL, and other prototype tools were utilized as part of the tech stack.',
   },
   {
     year: '2019',
-    title: 'Graduate Student',
-    duration: '2 Years',
+    title: "Bachelor's Degree in Computer Science",
+    duration: '4 Years',
     details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra adipiscing at in tellus integer feugiat. Fermentum iaculis eu non diam phasellus vestibulum lorem. Morbi tempus iaculis urna id volutpat lacus laoreet. Viverra aliquet eget sit amet tellus cras. Sit amet mattis vulputate enim nulla aliquet porttitor lacus. Eu lobortis elementum nibh tellus molestie nunc non. Magna eget est lorem ipsum dolor sit amet consectetur.',
-  },
-  {
-    year: '2016',
-    title: 'Graduate Student',
-    duration: '2 Years',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra adipiscing at in tellus integer feugiat. Fermentum iaculis eu non diam phasellus vestibulum lorem. Morbi tempus iaculis urna id volutpat lacus laoreet. Viverra aliquet eget sit amet tellus cras. Sit amet mattis vulputate enim nulla aliquet porttitor lacus. Eu lobortis elementum nibh tellus molestie nunc non. Magna eget est lorem ipsum dolor sit amet consectetur.',
+      'I finished my computer science undergraduate degree. Learned about the design of computers, programming languages, compilers, algorithms, data structures, and elements of web development.',
   },
   {
     year: '2015',
-    title: 'Graduate Student',
-    duration: '2 Years',
+    title: 'Pursuit of Software Engineering',
+    duration: 'Beginning',
     details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Viverra adipiscing at in tellus integer feugiat. Fermentum iaculis eu non diam phasellus vestibulum lorem. Morbi tempus iaculis urna id volutpat lacus laoreet. Viverra aliquet eget sit amet tellus cras. Sit amet mattis vulputate enim nulla aliquet porttitor lacus. Eu lobortis elementum nibh tellus molestie nunc non. Magna eget est lorem ipsum dolor sit amet consectetur.',
+      "The computer sector was growing at the time, and I wasn't sure what to major in for my bachelor's degree. Since I was pretty skilled at operating software, I considered studying software engineering. Which are, ironically, two quite different things.",
   },
 ];

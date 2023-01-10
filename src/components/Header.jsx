@@ -38,7 +38,7 @@ function Header({ theme, handleThemeSwitch, dark }) {
   );
   return (
     // {/*Add shadow to the bottom of the header*/}
-    <header className="sticky top-0 p-4 flex items-start justify-between max-w-7xl mx-auto z-20 xl:items-center bg-white dark:bg-[#191715]">
+    <header className="sticky top-0 p-4 flex items-start justify-between max-w-7xl mx-auto z-50 xl:items-center bg-white dark:bg-[#191715]">
       <motion.div
         initial={{ x: -500, opacity: 0, scale: 0.5 }}
         animate={{ x: 0, opacity: 1, scale: 1 }}
