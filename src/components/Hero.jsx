@@ -1,6 +1,8 @@
 import React from 'react';
 import { Cursor, useTypewriter } from 'react-simple-typewriter';
 import BackgroundCircles from './BackgroundCircles';
+import heroImage from '../assets/heroImage.jpg';
+import resume from '../assets/VedangBarhate_resume.pdf';
 
 export default function Hero({ theme, dark }) {
   const [text, count] = useTypewriter({
@@ -22,7 +24,7 @@ export default function Hero({ theme, dark }) {
     <div className="h-screen flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
       <BackgroundCircles />
       <img
-        src="../assets/heroImage.jpg"
+        src={heroImage}
         alt=""
         className="mx-auto relative rounded-full h-32 w-32 object-cover"
       />
@@ -45,11 +47,7 @@ export default function Hero({ theme, dark }) {
             <a href="#skills">Skills</a>
           </button>
           <button className="heroNav">
-            <a
-              href="../../public/VedangBarhate_resume.pdf"
-              target="_blank"
-              download
-            >
+            <a href={resume} target="_blank" download>
               Resume
             </a>
           </button>

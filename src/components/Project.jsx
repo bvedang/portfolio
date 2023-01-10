@@ -7,6 +7,9 @@ import TensorflowIcon from './techIcons/TensorflowIcon';
 import PandasIcon from './techIcons/PandasIcon';
 import NumpyIcon from './techIcons/NumpyIcon';
 import Title from './Title';
+import nlpImage from '../assets/nlp.png';
+import microServiceImage from '../assets/microService.jpg';
+import expenseManagerImage from '../assets/expenseManager.jpg';
 
 function Project() {
   return (
@@ -89,7 +92,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/expenseManager.jpg"
+            src={expenseManagerImage}
             alt="Project Image"
           />
         </div>
@@ -103,7 +106,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/microService.jpg"
+            src={microServiceImage}
             alt="Project Image"
           />
         </div>
@@ -226,7 +229,7 @@ function Project() {
         <div className={styles.projectImgBox}>
           <img
             className={styles.projectImg}
-            src="../assets/nlp.png"
+            src={nlpImage}
             alt="Project Image"
           />
         </div>
