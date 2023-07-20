@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
-import { useInView } from 'react-intersection-observer';
-import Intro from './components/Intro';
-import Timeline from './components/Timeline';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import ToTop from './components/ToTop';
-import Project from './components/Project';
-import Skills from './components/Skills';
-import styles from './app.module.css';
+import { useEffect, useState, useRef } from "react";
+import { useInView } from "react-intersection-observer";
+import Intro from "./components/Intro";
+import Timeline from "./components/Timeline";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import ToTop from "./components/ToTop";
+import Project from "./components/Project";
+import Skills from "./components/Skills";
+import styles from "./app.module.css";
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -18,13 +18,13 @@ function App() {
   const { ref: contactRef, inView: contactVisible } = useInView();
   const { ref: skillsref, inView: skillsVisible } = useInView();
 
-  const dark = 'dark';
-  const light = 'light';
+  const dark = "dark";
+  const light = "light";
   useEffect(() => {
-    if (window.matchMedia('(prefers-color-scheme:dark)').matches) {
-      setTheme('dark');
+    if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
+      setTheme("dark");
     } else {
-      setTheme('light');
+      setTheme("light");
     }
   }, []);
 
@@ -33,9 +33,9 @@ function App() {
   };
   useEffect(() => {
     if (theme === dark) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
   return (
@@ -53,24 +53,23 @@ function App() {
           <section id="about">
             <Intro />
           </section>
-
           <section
             ref={projectRef}
             id="projects"
-            className={`${styles.hidden} ${projectVisible ? styles.show : ''}`}
+            className={`${styles.hidden} ${projectVisible ? styles.show : ""}`}
           >
             <Project />
           </section>
           <section
             ref={timeLineRef}
-            className={`${styles.hidden} ${timeLineVisible ? styles.show : ''}`}
+            className={`${styles.hidden} ${timeLineVisible ? styles.show : ""}`}
           >
             <Timeline />
           </section>
 
           <section
             ref={skillsref}
-            className={`${styles.hidden} ${skillsVisible ? styles.show : ''}`}
+            className={`${styles.hidden} ${skillsVisible ? styles.show : ""}`}
             id="skills"
           >
             <Skills />
@@ -79,7 +78,7 @@ function App() {
           <section
             ref={contactRef}
             id="contact"
-            className={`${styles.hidden} ${contactVisible ? styles.show : ''}`}
+            className={`${styles.hidden} ${contactVisible ? styles.show : ""}`}
           >
             <Contact />
           </section>
