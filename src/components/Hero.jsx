@@ -1,15 +1,15 @@
-import React from 'react';
-import { Cursor, useTypewriter } from 'react-simple-typewriter';
-import BackgroundCircles from './BackgroundCircles';
-import heroImage from '../assets/heroImage.jpg';
-import resume from '../assets/VedangBarhate_resume.pdf';
+import React from "react";
+import { Cursor, useTypewriter } from "react-simple-typewriter";
+import BackgroundCircles from "./BackgroundCircles";
+import heroImage from "../assets/heroImage.jpg";
+import resume from "../assets/VedangBarhate_resume.pdf";
 
 export default function Hero({ theme, dark }) {
   const [text, count] = useTypewriter({
     words: [
-      'Hi, My Name is Vedang Barhate',
-      'Guy who loves to play Valorant',
-      '<ButLovesToCodeMore/>',
+      "Hi, My Name is Vedang Barhate",
+      "Guy who loves to play Valorant",
+      "<ButLovesToCodeMore/>",
     ],
     loop: true,
     delaySpeed: 2000,
@@ -30,7 +30,7 @@ export default function Hero({ theme, dark }) {
       />
       <div className="z-20">
         <h2 className="text-sm uppercase text-gray-700 dark:text-stone-400 pb-2 tracking-[12-x">
-          Aspiring Software Engineer
+          Full Stack Software Enginner
         </h2>
         <h1 className="text-3xl md:text-4xl dark:text-white font-semibold px-10">
           <span className="mr-3 text-black dark:text-white">{text}</span>
