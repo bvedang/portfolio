@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default function Intro() {
   return (
@@ -7,15 +7,13 @@ export default function Intro() {
         About
       </h3>
       <p className="text-sm max-w-2xl mb-6 font-bold">
-        "I am an Aspiring Software Engineer currently pursuing Masters in
-        Computer Science at Illinois Institute of Technology. My fascination in
-        Web Development began in 2019 when i first came across flask micro-web
-        development framework, used to develop websites. I was trying to build
-        full E-commerce website in one go just to learn how website are actually
-        developed but I was unable to develop a fully functional website using
-        flask but it taught me a lot about Frontend(HTML CSS, JavaScript and
-        Ajax) and Backend(Python , Flask and API) technology. Additionally, it
-        sparked my interest in pursuing a profession in web development."{' '}
+        "I am an experienced Full Stack Developer with expertise in Java and
+        Python (Django/Flask). Proficient in HTML, CSS, and JavaScript, I have a
+        strong understanding of OOP, SDLC, and agile methodologies. I excel in
+        Django, Flask, and REST API frameworks, and have hands-on experience
+        with React, PostgreSQL, Docker, and AWS. With strong problem-solving and
+        collaboration skills, I am committed to delivering high-quality
+        solutions."{" "}
       </p>
     </div>
   );
