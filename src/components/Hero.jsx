@@ -2,12 +2,11 @@ import React from "react";
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import BackgroundCircles from "./BackgroundCircles";
 import heroImage from "../assets/heroImage.jpg";
-import resume from "../assets/VedangBarhate_resume.pdf";
 
 export default function Hero({ theme, dark }) {
   const [text, count] = useTypewriter({
     words: [
-      "Hi, My Name is Vedang Barhate",
+      "Hi, My Name is Vedang.",
       "Guy who loves to play Valorant",
       "<ButLovesToCodeMore/>",
     ],
@@ -30,7 +29,7 @@ export default function Hero({ theme, dark }) {
       />
       <div className="z-20">
         <h2 className="text-sm uppercase text-gray-700 dark:text-stone-400 pb-2 tracking-[12-x">
-          Full Stack Software Enginner
+          Fellow Tech Enthusiast
         </h2>
         <h1 className="text-3xl md:text-4xl dark:text-white font-semibold px-10">
           <span className="mr-3 text-black dark:text-white">{text}</span>
@@ -45,11 +44,6 @@ export default function Hero({ theme, dark }) {
           </button>
           <button className="heroNav">
             <a href="#skills">Skills</a>
-          </button>
-          <button className="heroNav">
-            <a href={resume} target="_blank" download>
-              Resume
-            </a>
           </button>
         </div>
       </div>
