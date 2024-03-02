@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Intro() {
   return (
-    <div className="flex items-center justify-center relative flex-col p-6 justify-evenly h-screen ">
+    <div className="flex items-center relative flex-col p-6 justify-evenly h-screen ">
       <h3 className="absolute top-20 uppercase tracking-[20px] dark:text-white text-black text-2xl">
         About
       </h3>
