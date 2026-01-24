@@ -1,0 +1,180 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MinimalHeader from '../../components/MinimalHeader.astro';
+import BlogSearch from '../../components/react/BlogSearch';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
+
+const ebpfGuide = posts.find(post => post.slug.includes('ebpf') || post.data.tags.includes('ebpf'));
+
+const postsForSearch = posts.map(post => ({
+  slug: post.slug,
+  title: post.data.title,
+  description: post.data.description,
+  tags: post.data.tags,
+  pubDate: post.data.pubDate.toISOString(),
+}));
+---
+
+<BaseLayout
+  title="Blog | Vedang Barhate"
+  description="Technical blog posts about eBPF, systems programming, and software engineering."
+>
+  <MinimalHeader />
+
+  <main class="max-w-4xl mx-auto px-4 py-12 pt-24">
+    <header class="mb-12">
+      <a href="/" class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Home
+      </a>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4">Blog</h1>
+      <p class="text-stone-600 dark:text-stone-400 text-lg">
+        Technical writings about eBPF, systems programming, and software engineering.
+      </p>
+    </header>
+
+    {ebpfGuide && posts.length > 1 && (
+      <section class="mb-12 p-6 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-1">Start Here</h2>
+            <p class="text-emerald-700 dark:text-emerald-300 text-sm mb-3">
+              New to eBPF? Start with this comprehensive guide.
+            </p>
+            <a
+              href={`/blog/${ebpfGuide.slug}`}
+              class="inline-flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 dark:hover:text-emerald-300 font-medium transition-colors"
+            >
+              {ebpfGuide.data.title}
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {allTags.length > 0 && (
+      <nav class="mb-8">
+        <div class="flex flex-wrap gap-2">
+          <span class="text-stone-500 text-sm self-center mr-2">Filter by tag:</span>
+          {allTags.map((tag) => (
+            <a
+              href={`/blog/tags/${tag}`}
+              class="px-3 py-1 text-sm bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-full hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </nav>
+    )}
+
+    {posts.length === 0 ? (
+      <div class="text-center py-12">
+        <p class="text-stone-600 dark:text-stone-400 text-lg">No posts yet. Check back soon!</p>
+      </div>
+    ) : posts.length >= 3 ? (
+      <div id="blog-search-container">
+        <div id="blog-search-skeleton" class="mb-8">
+          <div class="relative">
+            <div class="w-full h-12 bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-lg animate-pulse"></div>
+          </div>
+          <div class="mt-6 space-y-6">
+            {posts.slice(0, 3).map(() => (
+              <div class="p-6 rounded-lg bg-stone-100 dark:bg-stone-900/50 border border-stone-200 dark:border-stone-800">
+                <div class="flex gap-2 mb-3">
+                  <div class="w-12 h-5 bg-stone-200 dark:bg-stone-800 rounded animate-pulse"></div>
+                  <div class="w-16 h-5 bg-stone-200 dark:bg-stone-800 rounded animate-pulse"></div>
+                </div>
+                <div class="w-3/4 h-7 bg-stone-200 dark:bg-stone-800 rounded animate-pulse mb-2"></div>
+                <div class="w-full h-4 bg-stone-200 dark:bg-stone-800 rounded animate-pulse mb-1"></div>
+                <div class="w-2/3 h-4 bg-stone-200 dark:bg-stone-800 rounded animate-pulse mb-4"></div>
+                <div class="w-24 h-4 bg-stone-200 dark:bg-stone-800 rounded animate-pulse"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div id="blog-search-content" class="hidden">
+          <BlogSearch posts={postsForSearch} client:load />
+        </div>
+
+        <script>
+          const observer = new MutationObserver(() => {
+            const searchInput = document.querySelector('#blog-search-content input');
+            if (searchInput) {
+              document.getElementById('blog-search-skeleton')?.classList.add('hidden');
+              document.getElementById('blog-search-content')?.classList.remove('hidden');
+              observer.disconnect();
+            }
+          });
+
+          const container = document.getElementById('blog-search-content');
+          if (container) {
+            observer.observe(container, { childList: true, subtree: true });
+          }
+        </script>
+      </div>
+    ) : (
+      <div class="space-y-6">
+        {posts.map((post) => (
+          <article class="group">
+            <a href={`/blog/${post.slug}`} class="block">
+              <div class="p-6 rounded-lg bg-stone-100 dark:bg-stone-900/50 hover:bg-stone-200 dark:hover:bg-stone-800/50 transition-colors border border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700">
+                <div class="flex flex-wrap gap-2 mb-3">
+                  {post.data.tags.map((tag) => (
+                    <span class="px-2 py-0.5 text-xs bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <h2 class="text-xl md:text-2xl font-semibold text-stone-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors mb-2">
+                  {post.data.title}
+                </h2>
+
+                <p class="text-stone-600 dark:text-stone-400 mb-4 line-clamp-2">
+                  {post.data.description}
+                </p>
+
+                <time class="text-sm text-stone-500" datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <footer class="mt-12 pt-8 border-t border-stone-200 dark:border-stone-800">
+      <a
+        href="/rss.xml"
+        class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+      >
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+        </svg>
+        Subscribe via RSS
+      </a>
+    </footer>
+  </main>
+</BaseLayout>

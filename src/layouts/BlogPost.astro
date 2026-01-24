@@ -1,0 +1,206 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import MinimalHeader from '../components/MinimalHeader.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    updatedDate?: Date;
+    image?: string;
+    tags: string[];
+  };
+  headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { frontmatter, headings = [] } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
+const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const ogImage = frontmatter.image
+  ? `${siteUrl}${frontmatter.image}`
+  : `${siteUrl}/portfolio.png`;
+
+const pubDateFormatted = frontmatter.pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout
+  title={`${frontmatter.title} | Vedang Barhate`}
+  description={frontmatter.description}
+  image={frontmatter.image || '/portfolio.png'}
+  type="article"
+>
+  <head slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content={frontmatter.pubDate.toISOString()} />
+    {frontmatter.updatedDate && (
+      <meta property="article:modified_time" content={frontmatter.updatedDate.toISOString()} />
+    )}
+    {frontmatter.tags.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": frontmatter.title,
+      "description": frontmatter.description,
+      "image": ogImage,
+      "datePublished": frontmatter.pubDate.toISOString(),
+      "dateModified": (frontmatter.updatedDate || frontmatter.pubDate).toISOString(),
+      "author": {
+        "@type": "Person",
+        "name": "Vedang Barhate",
+        "url": siteUrl
+      },
+      "mainEntityOfPage": canonicalUrl
+    })} />
+  </head>
+
+  <!-- Reading Progress Bar -->
+  <div
+    id="reading-progress"
+    class="fixed top-0 left-0 h-1 bg-orange-500 z-[60] transition-[width] duration-150"
+    style="width: 0%"
+  ></div>
+
+  <MinimalHeader />
+
+  <!-- Table of Contents (Desktop only) -->
+  {headings.length >= 3 && (
+    <TableOfContents headings={headings} />
+  )}
+
+  <main class="max-w-3xl mx-auto px-4 py-12 pt-24">
+    <a
+      href="/blog"
+      class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-8"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to Blog
+    </a>
+
+    <article>
+      <header class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4">
+          {frontmatter.title}
+        </h1>
+
+        <div class="flex flex-wrap items-center gap-4 text-sm text-stone-500 dark:text-stone-400 mb-4">
+          <time datetime={frontmatter.pubDate.toISOString()}>
+            {pubDateFormatted}
+          </time>
+          {frontmatter.updatedDate && (
+            <span>
+              (Updated: <time datetime={frontmatter.updatedDate.toISOString()}>
+                {updatedDateFormatted}
+              </time>)
+            </span>
+          )}
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          {frontmatter.tags.map((tag) => (
+            <a
+              href={`/blog/tags/${tag}`}
+              class="px-3 py-1 text-xs bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-full hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      </header>
+
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <slot />
+      </div>
+    </article>
+
+    <footer class="mt-16 pt-8 border-t border-stone-200 dark:border-stone-800">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <a
+          href="/blog"
+          class="text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
+        >
+          View all posts
+        </a>
+        <a
+          href="/rss.xml"
+          class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+        >
+          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+          </svg>
+          RSS Feed
+        </a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const progressBar = document.getElementById('reading-progress');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (progressBar && !prefersReducedMotion) {
+      const updateProgress = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressBar.style.width = `${Math.min(100, Math.max(0, scrollPercent))}%`;
+      };
+
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    } else if (progressBar && prefersReducedMotion) {
+      progressBar.style.display = 'none';
+    }
+
+    const codeBlocks = document.querySelectorAll('pre');
+
+    codeBlocks.forEach((pre) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'relative group';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'absolute top-2 right-2 px-2 py-1 text-xs bg-stone-700 text-stone-300 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-stone-600';
+      copyBtn.textContent = 'Copy';
+      copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
+
+      copyBtn.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.textContent || pre.textContent || '';
+        try {
+          await navigator.clipboard.writeText(code);
+          copyBtn.textContent = 'Copied!';
+          copyBtn.classList.add('bg-green-600');
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('bg-green-600');
+          }, 2000);
+        } catch (err) {
+          copyBtn.textContent = 'Failed';
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+          }, 2000);
+        }
+      });
+
+      wrapper.appendChild(copyBtn);
+    });
+  </script>
+</BaseLayout>

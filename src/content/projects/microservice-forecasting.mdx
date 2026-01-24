@@ -1,0 +1,37 @@
+---
+title: "GitHub Forecasting Service"
+description: "Predict GitHub repo growth. Three ML models compared. 85% accuracy."
+problem: "Predicting repo growth is hard. One model isn't enough."
+approach: "Three microservices: LSTM, Prophet, Statsmodels. Each runs independently in Docker."
+impact: "85% accuracy by combining models. LSTM wins short-term. Prophet wins seasonal patterns."
+stack:
+  - LSTM
+  - Prophet
+  - React
+  - Flask
+  - Docker
+  - Python
+githubUrl: "https://github.com/bvedang/React-Flask-Microservice"
+image: "/images/microService.jpg"
+featured: true
+order: 2
+draft: false
+---
+
+## What it does
+
+Input: GitHub repo. Output: predicted stars, forks, issues.
+
+## Architecture
+
+Three microservices, each a different forecasting model:
+
+- **LSTM** — neural network, best for short-term
+- **Prophet** — handles seasonality well
+- **Statsmodels** — traditional stats baseline
+
+Each runs in Docker. React frontend compares predictions side by side.
+
+## Results
+
+No single model wins every case. LSTM: short-term. Prophet: seasonal patterns. Combined: 85% accuracy.

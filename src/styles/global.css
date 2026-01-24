@@ -1,0 +1,210 @@
+/* Tailwind v4 - CSS-first configuration */
+@import "tailwindcss";
+
+/* Custom theme (replaces tailwind.config.js) */
+@theme {
+    --font-inter: "Inter", sans-serif;
+    --color-background: #191715;
+}
+
+/* Dark mode via CSS */
+@variant dark (&:where(.dark, .dark *));
+
+/* Plugins loaded via CSS */
+@plugin "@tailwindcss/typography";
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* SVG fill for tech icons */
+svg {
+    fill: currentColor;
+}
+
+
+/* Grid card hover animations */
+.grid-card {
+    transition:
+        transform 0.3s ease-out,
+        box-shadow 0.3s ease-out;
+}
+
+.grid-card:hover {
+    transform: translateY(-4px);
+}
+
+/* Tag-based gradient backgrounds for blog cards */
+.gradient-linux {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+}
+
+.gradient-ebpf {
+    background: linear-gradient(135deg, #059669, #0d9488);
+}
+
+.gradient-systems {
+    background: linear-gradient(135deg, #dc2626, #ea580c);
+}
+
+.gradient-react {
+    background: linear-gradient(135deg, #06b6d4, #2563eb);
+}
+
+.gradient-python {
+    background: linear-gradient(135deg, #eab308, #16a34a);
+}
+
+.gradient-default {
+    background: linear-gradient(135deg, #525252, #737373);
+}
+
+/* Line clamp utility for card descriptions */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Section reveal animations on scroll */
+.animate-section {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animation effect when scrolling into view */
+@supports (animation-timeline: view()) {
+    .animate-section {
+        animation: fadeSlideIn linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+    }
+
+    @keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-section {
+        animation: none;
+    }
+}
+
+/* Reduced motion support - comprehensive */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .grid-card:hover {
+        transform: none;
+    }
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+    outline: 2px solid #f97316; /* orange-500 */
+    outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* Prose styling for blog posts */
+.prose {
+    max-width: none;
+}
+
+.prose pre {
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.prose code {
+    background-color: #e7e5e4; /* stone-200 */
+    color: #292524; /* stone-800 */
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+:where(.dark) .prose code {
+    background-color: #292524; /* stone-800 */
+    color: #e7e5e4; /* stone-200 */
+}
+
+.prose pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.prose a {
+    color: #ea580c; /* orange-600 */
+    transition: color 0.15s;
+}
+
+.prose a:hover {
+    color: #f97316; /* orange-500 */
+}
+
+:where(.dark) .prose a {
+    color: #fb923c; /* orange-400 */
+}
+
+:where(.dark) .prose a:hover {
+    color: #fdba74; /* orange-300 */
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+    color: #1c1917; /* stone-900 */
+}
+
+:where(.dark) .prose h1,
+:where(.dark) .prose h2,
+:where(.dark) .prose h3,
+:where(.dark) .prose h4 {
+    color: #ffffff;
+}
+
+.prose p,
+.prose li {
+    color: #44403c; /* stone-700 */
+}
+
+:where(.dark) .prose p,
+:where(.dark) .prose li {
+    color: #d6d3d1; /* stone-300 */
+}
+
+.prose strong {
+    color: #1c1917; /* stone-900 */
+}
+
+:where(.dark) .prose strong {
+    color: #ffffff;
+}

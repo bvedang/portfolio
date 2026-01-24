@@ -1,0 +1,15 @@
+{
+  "name": "Vedang Barhate — Portfolio",
+  "short_name": "Vedang",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#191715",
+  "theme_color": "#191715",
+  "icons": [
+    {
+      "src": "portfolio.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

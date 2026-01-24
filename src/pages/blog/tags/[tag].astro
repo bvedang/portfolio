@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import MinimalHeader from "../../../components/MinimalHeader.astro";
+
+export async function getStaticPaths() {
+    const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+    // Get all unique tags
+    const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+
+    return tags.map((tag) => ({
+        params: { tag },
+        props: {
+            tag,
+            posts: posts
+                .filter((post) => post.data.tags.includes(tag))
+                .sort(
+                    (a, b) =>
+                        b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+                ),
+        },
+    }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout
+    title={`Posts tagged "${tag}" | Vedang Barhate`}
+    description={`Blog posts about ${tag}`}
+>
+    <MinimalHeader />
+
+    <main class="max-w-4xl mx-auto px-4 py-12 pt-24">
+        {/* Header */}
+        <header class="mb-12">
+            <a
+                href="/blog"
+                class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6"
+            >
+                <svg
+                    class="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 19l-7-7 7-7"></path>
+                </svg>
+                All Posts
+            </a>
+
+            <h1
+                class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4"
+            >
+                Posts tagged <span class="text-orange-500 dark:text-orange-400"
+                    >#{tag}</span
+                >
+            </h1>
+            <p class="text-stone-600 dark:text-stone-400">
+                {posts.length} post{posts.length !== 1 ? "s" : ""} found
+            </p>
+        </header>
+
+        {/* Posts list */}
+        <div class="space-y-8">
+            {
+                posts.map((post) => (
+                    <article class="group">
+                        <a href={`/blog/${post.slug}`} class="block">
+                            <div class="p-6 rounded-lg bg-stone-100 dark:bg-stone-900/50 hover:bg-stone-200 dark:hover:bg-stone-800/50 transition-colors border border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    {post.data.tags.map((t) => (
+                                        <span
+                                            class={`px-2 py-0.5 text-xs rounded ${t === tag ? "bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400" : "bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400"}`}
+                                        >
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <h2 class="text-xl md:text-2xl font-semibold text-stone-900 dark:text-white group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors mb-2">
+                                    {post.data.title}
+                                </h2>
+
+                                <p class="text-stone-600 dark:text-stone-400 mb-4 line-clamp-2">
+                                    {post.data.description}
+                                </p>
+
+                                <time
+                                    datetime={post.data.pubDate.toISOString()}
+                                    class="text-sm text-stone-500"
+                                >
+                                    {post.data.pubDate.toLocaleDateString(
+                                        "en-US",
+                                        {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        },
+                                    )}
+                                </time>
+                            </div>
+                        </a>
+                    </article>
+                ))
+            }
+        </div>
+    </main>
+</BaseLayout>

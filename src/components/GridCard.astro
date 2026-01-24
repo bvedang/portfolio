@@ -1,0 +1,150 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  tags?: string[];
+  href: string;
+  type: 'project' | 'blog';
+  featured?: boolean;
+  githubUrl?: string;
+  liveUrl?: string;
+}
+
+const { title, description, image, tags = [], href, type, featured = false, githubUrl, liveUrl } = Astro.props;
+
+const tagGradients: Record<string, string> = {
+  linux: 'from-violet-600 to-indigo-600',
+  ebpf: 'from-emerald-600 to-teal-600',
+  systems: 'from-red-600 to-orange-600',
+  react: 'from-cyan-500 to-blue-600',
+  python: 'from-yellow-500 to-green-600',
+  default: 'from-stone-600 to-stone-700',
+};
+
+const getGradient = () => {
+  if (image) return '';
+  const firstTag = tags[0]?.toLowerCase() || 'default';
+  return tagGradients[firstTag] || tagGradients.default;
+};
+
+const gradient = getGradient();
+---
+
+<article class:list={[
+  "grid-card group relative overflow-hidden rounded-xl transition-all duration-300",
+  "hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-500/10",
+  featured && "col-span-2"
+]}>
+  <a href={href} class="block h-full">
+    <!-- Image or Gradient Background -->
+    <div class="relative aspect-[4/3] overflow-hidden">
+      {image ? (
+        <img
+          src={image}
+          alt={title}
+          width={800}
+          height={600}
+          class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading={featured ? "eager" : "lazy"}
+          decoding="async"
+        />
+      ) : (
+        <div class:list={[
+          "w-full h-full bg-gradient-to-br flex items-center justify-center",
+          gradient
+        ]}>
+          <!-- Code preview visual for blog posts -->
+          <div class="text-white/20 text-6xl font-mono">
+            {type === 'blog' ? '</>' : '{ }'}
+          </div>
+        </div>
+      )}
+
+      <!-- Overlay on hover -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+
+      <!-- Content overlay -->
+      <div class="absolute inset-0 p-5 flex flex-col justify-end">
+        <!-- Tags -->
+        {tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-3 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-75">
+            {tags.slice(0, 3).map((tag) => (
+              <span class="px-2 py-0.5 text-xs bg-white/20 text-white rounded-full backdrop-blur-sm">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <!-- Title - always visible -->
+        <h3 class="text-lg md:text-xl font-semibold text-white mb-2 line-clamp-2 group-hover:text-orange-400 transition-colors">
+          {title}
+        </h3>
+
+        <!-- Description - visible on hover -->
+        {description && (
+          <p class="text-sm text-stone-300 line-clamp-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-100">
+            {description}
+          </p>
+        )}
+
+        <!-- Action links for projects -->
+        {type === 'project' && (githubUrl || liveUrl) && (
+          <div class="flex gap-3 mt-4 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 delay-150">
+            {liveUrl && (
+              <a
+                href={liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-1.5 text-xs bg-orange-500 text-white rounded-full hover:bg-orange-400 transition-colors"
+                onclick="event.stopPropagation();"
+              >
+                View Live
+              </a>
+            )}
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-1.5 text-xs bg-stone-700 text-white rounded-full hover:bg-stone-600 transition-colors flex items-center gap-1"
+                onclick="event.stopPropagation();"
+              >
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+                GitHub
+              </a>
+            )}
+          </div>
+        )}
+
+        <!-- Type indicator -->
+        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span class="px-2 py-1 text-xs uppercase tracking-wider bg-black/50 text-white rounded backdrop-blur-sm">
+            {type}
+          </span>
+        </div>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .grid-card {
+    background: #f5f5f4; /* stone-100 for light mode */
+  }
+
+  .grid-card:hover {
+    background: #e7e5e4; /* stone-200 for light mode */
+  }
+
+  :global(.dark) .grid-card {
+    background: #1c1917;
+  }
+
+  :global(.dark) .grid-card:hover {
+    background: #292524;
+  }
+</style>

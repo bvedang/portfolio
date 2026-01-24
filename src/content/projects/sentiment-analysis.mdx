@@ -1,0 +1,45 @@
+---
+title: "SVM vs BERT: Sentiment Analysis"
+description: "BERT keeps 92% accuracy on noisy text. SVM drops to 78%. Tested on 50k reviews."
+problem: "Real user text has typos and slang. Which model handles the mess?"
+approach: "50k movie reviews. Added controlled noise. Compared SVM and BERT accuracy."
+impact: "BERT: 92% on noisy data. SVM: 78%. Use BERT for user-generated content."
+stack:
+  - BERT
+  - SVM
+  - Pandas
+  - NumPy
+  - Scikit-learn
+  - PyTorch
+  - Python
+image: "/images/nlp.png"
+featured: true
+order: 3
+draft: false
+---
+
+## Question
+
+How do sentiment models handle messy text? Typos, slang, missing punctuation.
+
+## Method
+
+1. IMDB dataset: 50k reviews
+2. Train SVM and BERT on clean data
+3. Add noise: typos, word swaps, missing punctuation
+4. Measure accuracy drop
+
+## Results
+
+| Data Quality | SVM | BERT |
+|-------------|-----|------|
+| Clean | 95% | 95% |
+| 30% noisy | 78% | 92% |
+
+## Why BERT wins
+
+SVM uses word frequencies. Typo = unknown word = lost signal. BERT uses context. It infers "gret" means "great" from surrounding words.
+
+## Takeaway
+
+User-generated content is messy. Use BERT. Computational cost is worth the accuracy.

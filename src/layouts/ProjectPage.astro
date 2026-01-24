@@ -1,0 +1,176 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import MinimalHeader from '../components/MinimalHeader.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    problem?: string;
+    approach?: string;
+    impact?: string;
+    stack: string[];
+    githubUrl?: string;
+    liveUrl?: string;
+    image?: string;
+  };
+}
+
+const { frontmatter } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
+const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const ogImage = frontmatter.image
+  ? `${siteUrl}${frontmatter.image}`
+  : `${siteUrl}/portfolio.png`;
+---
+
+<BaseLayout
+  title={`${frontmatter.title} | Vedang Barhate`}
+  description={frontmatter.description}
+  image={frontmatter.image || '/portfolio.png'}
+>
+  <head slot="head">
+    <link rel="canonical" href={canonicalUrl} />
+
+    {/* Project JSON-LD */}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareSourceCode",
+      "name": frontmatter.title,
+      "description": frontmatter.description,
+      "image": ogImage,
+      "author": {
+        "@type": "Person",
+        "name": "Vedang Barhate",
+        "url": siteUrl
+      },
+      "codeRepository": frontmatter.githubUrl,
+      "programmingLanguage": frontmatter.stack,
+      "mainEntityOfPage": canonicalUrl
+    })} />
+  </head>
+
+  <MinimalHeader />
+
+  <main class="max-w-4xl mx-auto px-4 py-12 pt-24">
+    {/* Back to projects */}
+    <a
+      href="/projects"
+      class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-8"
+    >
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back to Projects
+    </a>
+
+    <article>
+      {/* Hero Image */}
+      {frontmatter.image && (
+        <div class="mb-8 rounded-xl overflow-hidden">
+          <img
+            src={frontmatter.image}
+            alt={frontmatter.title}
+            width={1200}
+            height={630}
+            class="w-full h-auto object-cover"
+          />
+        </div>
+      )}
+
+      {/* Header */}
+      <header class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4">
+          {frontmatter.title}
+        </h1>
+
+        <p class="text-xl text-stone-600 dark:text-stone-400 mb-6">
+          {frontmatter.description}
+        </p>
+
+        {/* Action Links */}
+        <div class="flex flex-wrap gap-3">
+          {frontmatter.liveUrl && (
+            <a
+              href={frontmatter.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-400 transition-colors"
+            >
+              <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              View Live
+            </a>
+          )}
+          {frontmatter.githubUrl && (
+            <a
+              href={frontmatter.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center px-4 py-2 bg-stone-900 dark:bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors"
+            >
+              <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+              </svg>
+              View Source
+            </a>
+          )}
+        </div>
+      </header>
+
+      {/* Case Study Sections */}
+      {(frontmatter.problem || frontmatter.approach || frontmatter.impact) && (
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+          {frontmatter.problem && (
+            <div class="p-6 bg-stone-100 dark:bg-stone-900 rounded-xl">
+              <h2 class="text-sm uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-2">Problem</h2>
+              <p class="text-stone-700 dark:text-stone-300">{frontmatter.problem}</p>
+            </div>
+          )}
+          {frontmatter.approach && (
+            <div class="p-6 bg-stone-100 dark:bg-stone-900 rounded-xl">
+              <h2 class="text-sm uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-2">Approach</h2>
+              <p class="text-stone-700 dark:text-stone-300">{frontmatter.approach}</p>
+            </div>
+          )}
+          {frontmatter.impact && (
+            <div class="p-6 bg-stone-100 dark:bg-stone-900 rounded-xl">
+              <h2 class="text-sm uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-2">Impact</h2>
+              <p class="text-stone-700 dark:text-stone-300">{frontmatter.impact}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Tech Stack */}
+      {frontmatter.stack && frontmatter.stack.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-sm uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-4">Tech Stack</h2>
+          <div class="flex flex-wrap gap-2">
+            {frontmatter.stack.map((tech) => (
+              <span class="px-3 py-1.5 text-sm bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-full">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
+      <div class="prose prose-stone dark:prose-invert max-w-none">
+        <slot />
+      </div>
+    </article>
+
+    {/* Footer */}
+    <footer class="mt-16 pt-8 border-t border-stone-200 dark:border-stone-800">
+      <a
+        href="/projects"
+        class="text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
+      >
+        View all projects
+      </a>
+    </footer>
+  </main>
+</BaseLayout>

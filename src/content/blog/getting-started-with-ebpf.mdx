@@ -1,0 +1,86 @@
+---
+title: "Getting Started with eBPF"
+description: "Write your first eBPF program. Compile it. See output. 15 minutes."
+pubDate: 2025-01-15
+tags: ["ebpf", "linux", "systems"]
+draft: false
+---
+
+eBPF lets you run small programs inside the Linux kernel safely. In this post, you'll write one, compile it, and see output.
+
+**What you need:**
+- Linux (kernel 5.4+)
+- clang and llvm installed
+- Root access
+
+## What is eBPF?
+
+eBPF programs run when specific events happen in the kernel:
+
+- System calls
+- Function entry/exit
+- Network packets
+- Tracepoints
+
+## Your First eBPF Program
+
+Let's write a simple eBPF program that traces the `execve` system call - this runs every time a new process is executed.
+
+```c
+#include <linux/bpf.h>
+#include <bpf/bpf_helpers.h>
+
+SEC("kprobe/sys_execve")
+int bpf_prog(struct pt_regs *ctx) {
+    char msg[] = "Hello, eBPF!";
+    bpf_trace_printk(msg, sizeof(msg));
+    return 0;
+}
+
+char LICENSE[] SEC("license") = "GPL";
+```
+
+### Key Concepts
+
+1. **SEC macro**: Defines which hook point to attach to
+2. **bpf_trace_printk**: Helper function for debugging output
+3. **License**: Required for using certain BPF helpers
+
+## Compiling eBPF Programs
+
+You'll need a modern compiler with BPF support:
+
+```bash
+# Install dependencies (Ubuntu/Debian)
+sudo apt install clang llvm libbpf-dev
+
+# Compile to BPF bytecode
+clang -O2 -target bpf -c hello.bpf.c -o hello.bpf.o
+```
+
+## Loading and Attaching
+
+Use `bpftool` or a loader library like `libbpf`:
+
+```bash
+# Load and attach with bpftool
+sudo bpftool prog load hello.bpf.o /sys/fs/bpf/hello
+
+# View output
+sudo cat /sys/kernel/debug/tracing/trace_pipe
+```
+
+## Why eBPF Matters
+
+1. **Performance**: Runs in kernel space without context switching
+2. **Safety**: Verified by the kernel before execution
+3. **Flexibility**: Can be updated without rebooting
+4. **Observability**: Deep visibility into kernel operations
+
+## Next Steps
+
+- Explore [libbpf](https://github.com/libbpf/libbpf) for production use
+- Check out [bcc](https://github.com/iovisor/bcc) for Python bindings
+- Read the [eBPF documentation](https://ebpf.io/docs/)
+
+In future posts, we'll dive deeper into eBPF maps, more advanced tracing techniques, and building production-grade eBPF applications.

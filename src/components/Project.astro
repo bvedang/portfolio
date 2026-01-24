@@ -1,0 +1,156 @@
+---
+import Title from './Title.astro';
+
+// Project tech icon SVG paths
+const icons = {
+  react: `<path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/>`,
+  flask: `<path d="M7.172 20.36c-.382-.321-.701-.544-.868-.882-.19-.378-.251-.811-.259-1.254a7.905 7.905 0 0 1 .063-1.062c.05-.378.132-.721.158-.994.063-.625-.417-1.156-.86-1.881-.32-.514-.599-.925-.701-1.482-.07-.395-.044-1.209.082-1.674.063-.214.177-.463.203-.547.09-.294-.012-.554-.012-.825a3.238 3.238 0 0 1 .203-1.145c.115-.346.36-.623.573-.856.44-.48.986-.753 1.544-1.005.8-.353 1.6-.707 2.444-.958.227-.069.453-.14.675-.214l.016-.007.002-.001.008-.003a.473.473 0 0 1 .135-.022c.161.014.147.14.148.266v.009c-.043.141-.183.16-.308.196-.654.192-1.273.423-1.783.803-.337.246-.64.56-.77 1.028-.093.323-.066.585.023.746.112.196.334.358.493.479.227.173.454.346.68.522a2.008 2.008 0 0 1 .505.53c.29.432.232 1.065.025 1.56-.163.388-.413.678-.695.937a2.975 2.975 0 0 1-.617.437c.056.018.118.041.179.063.193.067.402.143.628.174.285.034.546.027.885.027.227 0 .392.033.49.134.098.1.122.256.116.465-.02.59-.044 1.181-.054 1.772-.014.793.043 1.607.262 2.388.12.425.265.82.472 1.156.106.172.228.348.357.517.019.026.024.029.023.03-.004.006-.016.017-.044.032a.53.53 0 0 1-.1.046 1.263 1.263 0 0 1-.253.06c-.412.062-.898.044-1.419-.114a4.14 4.14 0 0 1-.93-.423l-.027-.016-.024-.017-.021-.019c-.203.05-.392.116-.59.193-.377.151-.753.343-1.172.527-.34.15-.718.29-1.094.29a.899.899 0 0 1-.233-.028z"/>`,
+  materialui: `<path d="M0 2.475v10.39l3 1.733V7.67l6 3.465 6-3.465v3.465l-6 3.463v3.464l6 3.463 9-5.195V9.402l-3 1.733v3.463l-6 3.464-3-1.732 6-3.465V2.475L9 7.67 0 2.475zm24 0l-3 1.73V7.67l3-1.732V2.474Z"/>`,
+  tensorflow: `<path d="M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311l-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.618-3.074-1.756V7.603l6.168 3.564z"/>`,
+  pandas: `<path d="M16.922 0h2.623v18.104h-2.623zm-4.126 12.94h2.623v2.57h-2.623zm0-7.037h2.623v5.446h-2.623zm0 11.197h2.623v5.446h-2.623zM4.456 5.896h2.622V24H4.456zm4.213 2.559h2.623v2.57H8.67zm0 4.151h2.623v5.447H8.67zm0-11.187h2.623v5.446H8.67Z"/>`,
+  numpy: `<path d="M10.315 4.876L6.3048 2.8517l-4.401 2.1965 4.1487 2.0764zm1.8633.9304l4.506 2.1127-4.5072 2.1656-4.4192-2.211zm5.3862-.9293l-4.103-1.962 4.2466-2.0322 4.1118 1.9597zM5.357 9.9498v4.2165l-4.0025-2.0035.0015-4.1002zm5.9207 6.6673v4.1879l-4.1884-2.0567V14.511zm5.8583-2.5385v4.2224l-4.1295 2.0004v-4.0728zm6.4788-3.2155l-4.7434 2.2983-.0035 4.5008-1.7356.8402v-4.5765l4.7462-2.2983-.0024-4.5765 1.7387-.8415z"/>`,
+};
+
+interface Project {
+  title: string;
+  description: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  image: string;
+  imageAlt: string;
+  techStack: { name: string; icon: keyof typeof icons }[];
+}
+
+const projects: Project[] = [
+  {
+    title: "Personal Expense Manager",
+    description: "An online web application that tracks individual expenses. You can add expenses and view monthly spending by category. The application offers graphs based on the user's added expenses and offers analytical views based on the user's prior spending. Application shows how much the user has spent or saved in comparison to the average for the preceding month for each category.",
+    githubUrl: "https://github.com/bvedang/expense-manager",
+    liveUrl: "https://bvedang.github.io/expense-manager/",
+    image: "/images/expenseManager.jpg",
+    imageAlt: "Screenshot of Personal Expense Manager project",
+    techStack: [
+      { name: "React Js", icon: "react" },
+      { name: "Flask", icon: "flask" },
+      { name: "Material-UI", icon: "materialui" },
+    ],
+  },
+  {
+    title: "Time-series Forecasting with Microservice Architecture",
+    description: "This is web application that uses MicroServices Architecture for timeseries forecasting. Application pulls Github repositories data(issues, forks, branches, commits, release) using the Github repo api on the main flask server. After retrieving data from Github api it is sent to three different servers hosting 3 different timeseries-forecasting models i.e LSTM FB prophet and Statsmodel. Forecast data is visualized in frontEnd with React using Re-Chart",
+    githubUrl: "https://github.com/bvedang/React-Flask-Microservice",
+    image: "/images/microService.jpg",
+    imageAlt: "Screenshot of time-series forecasting microservice project",
+    techStack: [
+      { name: "LSTM", icon: "tensorflow" },
+      { name: "React", icon: "react" },
+      { name: "Flask", icon: "flask" },
+    ],
+  },
+  {
+    title: "Effect of Noise on Sentiment Analysis using SVM and BERT",
+    description: "This project is more of an experiment than an application. Here, we tested the impact of noise in sentiment analysis on a Support Vector Machine (SVM) model and a Bidirectional Encoder from Transformer (BERT) representation framework. We created different sized sample noisy datasets from 'Disneyland Reviews' and 'Amazon Reviews' containing equal positive, negative, and neutral labels. We then analyzed and visualized the performance of the SVM and BERT classifiers for different sample sizes and the presence of noise in the data with baseline results.",
+    image: "/images/nlp.png",
+    imageAlt: "Screenshot of sentiment analysis noise experiment project",
+    techStack: [
+      { name: "BERT", icon: "tensorflow" },
+      { name: "Pandas", icon: "pandas" },
+      { name: "Numpy", icon: "numpy" },
+    ],
+  },
+];
+---
+
+<div id="projects" class="max-w-[75rem] mx-auto my-20 p-6">
+  <div class="flex items-end justify-center md:mt-32 sm:mt-20 mt-16">
+    <Title>Projects</Title>
+  </div>
+
+  {projects.map((project, index) => (
+    <div class="project grid grid-cols-1 md:grid-cols-10 rounded-lg overflow-hidden transition-all duration-500 shadow-[0_10px_30px_-15px_#1c1917] hover:-translate-y-[0.5%] hover:shadow-[0_20px_30px_-15px_#1c1917] mb-8 dark:bg-stone-900 hover:dark:bg-[#292524] text-black dark:text-stone-300">
+      {/* Text box - order changes based on index for alternating layout */}
+      <div class={`p-8 md:col-span-6 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+        {project.githubUrl ? (
+          <a
+            class="hover:dark:text-stone-50 transition-all duration-500"
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <h3 class="text-2xl md:text-4xl leading-tight mb-12 lg:mb-16">{project.title}</h3>
+          </a>
+        ) : (
+          <h3 class="text-2xl md:text-4xl leading-tight mb-12 lg:mb-16">{project.title}</h3>
+        )}
+
+        <div class="text-lg leading-relaxed mb-12 lg:mb-16">
+          <h4 class="text-sm uppercase tracking-widest font-light mb-3">Description</h4>
+          <p class="text-base">{project.description}</p>
+          {project.liveUrl && (
+            <div class="mt-4 flex align-center justify-end">
+              <a
+                class="text-sm transition-all duration-500 hover:dark:border-b hover:border-b hover:dark:border-stone-300 hover:border-stone-700"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live Demo
+              </a>
+            </div>
+          )}
+        </div>
+
+        <h4 class="flex justify-end text-xs uppercase tracking-widest font-light mb-3">Tech Stack</h4>
+        <ul class="flex flex-wrap gap-2.5 justify-end list-none">
+          {project.techStack.map((tech) => (
+            <li class="flex gap-2 items-center px-2 py-0.5 text-xs leading-none">
+              <div class="flex flex-col justify-center items-center">
+                <div class="border dark:border-stone-300 border-stone-700 rounded-full p-3">
+                  <svg
+                    style="height: 2.5rem; width: 2.5rem;"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    set:html={icons[tech.icon]}
+                  />
+                </div>
+                <span class="mt-1">{tech.name}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Image box */}
+      <div class={`flex items-center md:col-span-4 overflow-hidden ${index % 2 === 1 ? 'md:order-1' : ''}`}>
+        <img
+          class="object-cover h-full w-full scale-[1.2]"
+          src={project.image}
+          alt={project.imageAlt}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  @media (max-width: 47em) {
+    .project {
+      background-color: #1c19177b;
+    }
+
+    .project > div:last-child {
+      z-index: -1;
+      grid-row: 1;
+      grid-column: 1;
+      opacity: 0.1;
+    }
+
+    .project > div:first-child {
+      grid-row: 1;
+      grid-column: 1;
+    }
+  }
+</style>

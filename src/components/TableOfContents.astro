@@ -1,0 +1,79 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
+---
+
+{filteredHeadings.length >= 3 && (
+  <aside class="hidden xl:block fixed left-8 top-1/2 -translate-y-1/2 w-56 z-30">
+    <nav class="p-4 bg-stone-100/80 dark:bg-stone-900/80 backdrop-blur-sm rounded-lg">
+      <h2 class="text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-3">
+        On this page
+      </h2>
+      <ul class="space-y-2 text-sm">
+        {filteredHeadings.map((heading) => (
+          <li
+            class:list={[
+              heading.depth === 3 && "ml-3"
+            ]}
+          >
+            <a
+              href={`#${heading.slug}`}
+              class="toc-link block py-1 text-stone-600 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors line-clamp-2"
+              data-heading={heading.slug}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </aside>
+)}
+
+<script>
+  const tocLinks = document.querySelectorAll('.toc-link');
+  const headingElements = Array.from(tocLinks).map(link => {
+    const slug = link.getAttribute('data-heading');
+    return slug ? document.getElementById(slug) : null;
+  }).filter(Boolean) as HTMLElement[];
+
+  if (tocLinks.length > 0 && headingElements.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            tocLinks.forEach(link => {
+              const isActive = link.getAttribute('data-heading') === id;
+              link.classList.toggle('text-orange-500', isActive);
+              link.classList.toggle('dark:text-orange-400', isActive);
+              link.classList.toggle('font-medium', isActive);
+              link.classList.toggle('text-stone-600', !isActive);
+              link.classList.toggle('dark:text-stone-400', !isActive);
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-80px 0px -80% 0px',
+        threshold: 0
+      }
+    );
+
+    headingElements.forEach(el => observer.observe(el));
+  }
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

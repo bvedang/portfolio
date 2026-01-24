@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+const {
+  title = "Vedang Barhate — Full-Stack Software Engineer",
+  description = "Vedang Barhate — full-stack software engineer. Projects, skills, experience timeline, and contact.",
+  image = "/portfolio.png",
+  type = "website",
+} = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
+const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+const isProduction = process.env.VERCEL_ENV === 'production';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Vedang Barhate" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    {!isProduction && <meta name="robots" content="noindex,nofollow" />}
+    {isProduction && <meta name="robots" content="index,follow" />}
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Vedang Barhate portfolio preview" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" type="image/png" href="/portfolio.png" />
+    <link rel="apple-touch-icon" href="/portfolio.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#191715" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="alternate" type="application/rss+xml" title="Vedang's Blog" href={`${siteUrl}/rss.xml`} />
+
+    <slot name="head" />
+  </head>
+
+  <body class="bg-white dark:bg-[#191715] duration-500 text-stone-900 dark:text-stone-300 min-h-screen font-inter">
+    <slot />
+
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('theme') ||
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+---
+interface TimelineEntry {
+    title: string;
+    subtitle: string;
+    duration?: string;
+    content: string;
+}
+
+interface Props {
+    data: TimelineEntry[];
+    id?: string;
+}
+
+const { data, id = `timeline-${Math.random().toString(36).slice(2, 9)}` } =
+    Astro.props;
+---
+
+<div class="timeline-container relative w-full" id={id}>
+    {
+        data.map((item, index) => (
+            <div class="flex justify-start pt-10 md:pt-20 md:gap-10">
+                <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                    <div class="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-background flex items-center justify-center">
+                        <div class="h-4 w-4 rounded-full bg-stone-200 dark:bg-stone-800 border border-stone-300 dark:border-stone-700" />
+                    </div>
+                    <h3 class="hidden md:block text-xl md:pl-20 md:text-4xl font-bold text-stone-400 dark:text-stone-500">
+                        {item.title}
+                    </h3>
+                </div>
+
+                <div class="relative pl-20 pr-4 md:pl-4 w-full">
+                    <h3 class="md:hidden block text-2xl mb-4 text-left font-bold text-stone-400 dark:text-stone-500">
+                        {item.title}
+                    </h3>
+
+                    <div class="mb-4">
+                        <h4 class="text-lg md:text-xl font-semibold text-stone-900 dark:text-white mb-1">
+                            {item.subtitle}
+                        </h4>
+                        {item.duration && (
+                            <span class="text-sm text-stone-500">
+                                {item.duration}
+                            </span>
+                        )}
+                    </div>
+
+                    <p class="text-stone-600 dark:text-stone-400 text-sm md:text-base leading-relaxed mb-8">
+                        {item.content}
+                    </p>
+                </div>
+            </div>
+        ))
+    }
+
+    <div
+        class="timeline-line absolute md:left-8 left-8 top-0 overflow-hidden w-0.5 bg-linear-to-b from-transparent via-stone-300 dark:via-stone-700 to-transparent"
+        style="height: 100%; mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);"
+    >
+        <div
+            class="timeline-beam absolute inset-x-0 top-0 w-0.5 bg-linear-to-t from-orange-500 via-amber-400 to-transparent rounded-full opacity-0 transition-opacity duration-300"
+            style="height: 0%;"
+        >
+        </div>
+    </div>
+</div>
+
+<script>
+    function initTimelineScroll() {
+        const containers = document.querySelectorAll(".timeline-container");
+
+        const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (prefersReducedMotion) return;
+
+        containers.forEach((container) => {
+            const beam = container.querySelector(
+                ".timeline-beam",
+            ) as HTMLElement;
+            if (!beam) return;
+
+            beam.style.opacity = "1";
+
+            const updateBeam = () => {
+                const rect = container.getBoundingClientRect();
+                const containerTop = rect.top;
+                const containerHeight = rect.height;
+                const windowHeight = window.innerHeight;
+
+                const startOffset = windowHeight * 0.1;
+                const endOffset = windowHeight * 0.5;
+
+                const scrollStart = -containerTop + startOffset;
+                const scrollRange = containerHeight - endOffset;
+
+                let progress = scrollStart / scrollRange;
+                progress = Math.max(0, Math.min(1, progress));
+
+                const beamHeight = progress * containerHeight;
+                beam.style.height = `${beamHeight}px`;
+            };
+
+            window.addEventListener("scroll", updateBeam, { passive: true });
+            window.addEventListener("resize", updateBeam, { passive: true });
+            updateBeam();
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", initTimelineScroll);
+    document.addEventListener("astro:page-load", initTimelineScroll);
+</script>
