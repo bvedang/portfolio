@@ -1,9 +1,12 @@
 ---
 interface TimelineEntry {
-    title: string;
-    subtitle: string;
-    duration?: string;
-    content: string;
+    title: string;          // Date range (e.g., "Dec 2025 - Present")
+    subtitle: string;       // Role title
+    organization: string;   // Company name
+    duration?: string;      // Duration label
+    content: string;        // Description
+    technologies?: string[]; // Tech tags
+    isCurrent?: boolean;    // Show current badge
 }
 
 interface Props {
@@ -15,54 +18,104 @@ const { data, id = `timeline-${Math.random().toString(36).slice(2, 9)}` } =
     Astro.props;
 ---
 
-<div class="timeline-container relative w-full" id={id}>
-    {
-        data.map((item, index) => (
-            <div class="flex justify-start pt-10 md:pt-20 md:gap-10">
-                <div class="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
-                    <div class="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white dark:bg-background flex items-center justify-center">
-                        <div class="h-4 w-4 rounded-full bg-stone-200 dark:bg-stone-800 border border-stone-300 dark:border-stone-700" />
-                    </div>
-                    <h3 class="hidden md:block text-xl md:pl-20 md:text-4xl font-bold text-stone-400 dark:text-stone-500">
-                        {item.title}
-                    </h3>
-                </div>
-
-                <div class="relative pl-20 pr-4 md:pl-4 w-full">
-                    <h3 class="md:hidden block text-2xl mb-4 text-left font-bold text-stone-400 dark:text-stone-500">
-                        {item.title}
-                    </h3>
-
-                    <div class="mb-4">
-                        <h4 class="text-lg md:text-xl font-semibold text-stone-900 dark:text-white mb-1">
-                            {item.subtitle}
-                        </h4>
-                        {item.duration && (
-                            <span class="text-sm text-stone-500">
-                                {item.duration}
-                            </span>
-                        )}
-                    </div>
-
-                    <p class="text-stone-600 dark:text-stone-400 text-sm md:text-base leading-relaxed mb-8">
-                        {item.content}
-                    </p>
-                </div>
-            </div>
-        ))
-    }
-
+<div class="timeline-container relative" id={id}>
+    {/* Timeline line */}
     <div
-        class="timeline-line absolute md:left-8 left-8 top-0 overflow-hidden w-0.5 bg-linear-to-b from-transparent via-stone-300 dark:via-stone-700 to-transparent"
-        style="height: 100%; mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);"
+        class="timeline-line absolute left-[7px] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-stone-200 dark:via-stone-800 to-transparent"
+        style="mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);"
     >
         <div
-            class="timeline-beam absolute inset-x-0 top-0 w-0.5 bg-linear-to-t from-orange-500 via-amber-400 to-transparent rounded-full opacity-0 transition-opacity duration-300"
+            class="timeline-beam absolute inset-x-0 top-0 w-px bg-gradient-to-t from-orange-500 via-orange-400 to-transparent rounded-full opacity-0 transition-opacity duration-300"
             style="height: 0%;"
         >
         </div>
     </div>
+
+    {/* Timeline entries */}
+    <div class="space-y-6">
+        {
+            data.map((item, index) => (
+                <div
+                    class="timeline-entry relative pl-8"
+                    style={`animation: fadeSlideIn 0.4s ease-out ${index * 80}ms both`}
+                >
+                    {/* Timeline dot */}
+                    <div class="absolute left-0 top-6 w-[15px] h-[15px] rounded-full bg-white dark:bg-stone-950 flex items-center justify-center">
+                        <div class={`w-[9px] h-[9px] rounded-full ${item.isCurrent ? 'bg-orange-500 ring-[3px] ring-orange-200 dark:ring-orange-900/40' : 'bg-stone-300 dark:bg-stone-700'}`} />
+                    </div>
+
+                    {/* Card */}
+                    <div class="timeline-card group bg-white dark:bg-stone-900 rounded-xl border border-stone-200 dark:border-stone-800 p-5 sm:p-6 transition-all duration-200 hover:border-stone-300 dark:hover:border-stone-700 hover:shadow-sm">
+                        {/* Header: Title and Current badge */}
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="min-w-0">
+                                <h4 class="text-base sm:text-lg font-semibold text-stone-900 dark:text-white mb-0.5 group-hover:text-orange-500 dark:group-hover:text-orange-400 transition-colors">
+                                    {item.subtitle}
+                                </h4>
+                                <p class="text-sm text-stone-600 dark:text-stone-400">
+                                    {item.organization}
+                                </p>
+                            </div>
+                            {item.isCurrent && (
+                                <span class="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                    Current
+                                </span>
+                            )}
+                        </div>
+
+                        {/* Date and duration */}
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-stone-500 mb-3">
+                            <span>{item.title}</span>
+                            {item.duration && (
+                                <>
+                                    <span class="text-stone-300 dark:text-stone-700">·</span>
+                                    <span>{item.duration}</span>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Description */}
+                        <p class="text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
+                            {item.content}
+                        </p>
+
+                        {/* Tech tags */}
+                        {item.technologies && item.technologies.length > 0 && (
+                            <div class="flex flex-wrap gap-1.5 sm:gap-2 mt-4 pt-4 border-t border-stone-100 dark:border-stone-800">
+                                {item.technologies.map((tech) => (
+                                    <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs font-medium rounded-full bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400">
+                                        {tech}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
 </div>
+
+<style>
+    @keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (hover: none) {
+        .timeline-card:hover {
+            border-color: inherit;
+            box-shadow: none;
+        }
+    }
+</style>
 
 <script>
     function initTimelineScroll() {
