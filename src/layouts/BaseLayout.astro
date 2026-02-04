@@ -19,11 +19,17 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-const isProduction = process.env.VERCEL_ENV === 'production';
+// Indexing control:
+// - Vercel preview/development should be noindex (VERCEL_ENV !== 'production')
+// - Non-Vercel builds should index when built in production mode
+const shouldIndex =
+  typeof process !== 'undefined' && process.env?.VERCEL_ENV
+    ? process.env.VERCEL_ENV === 'production'
+    : import.meta.env.PROD;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,8 +40,8 @@ const isProduction = process.env.VERCEL_ENV === 'production';
     <meta name="author" content="Vedang Barhate" />
     <link rel="canonical" href={canonicalUrl} />
 
-    {!isProduction && <meta name="robots" content="noindex,nofollow" />}
-    {isProduction && <meta name="robots" content="index,follow" />}
+    {!shouldIndex && <meta name="robots" content="noindex,nofollow" />}
+    {shouldIndex && <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />}
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -52,27 +58,27 @@ const isProduction = process.env.VERCEL_ENV === 'production';
     <link rel="icon" type="image/png" href="/portfolio.png" />
     <link rel="apple-touch-icon" href="/portfolio.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#191715" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D0C0A" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBF6EF" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Newsreader:opsz,wght@6..72,300..700&family=Syne:wght@400..800&display=swap"
       rel="stylesheet"
     />
 
     <link rel="alternate" type="application/rss+xml" title="Vedang's Blog" href={`${siteUrl}/rss.xml`} />
 
-    <slot name="head" />
-  </head>
-
-  <body class="bg-white dark:bg-[#191715] duration-500 text-stone-900 dark:text-stone-300 min-h-screen font-inter">
-    <slot />
-
     <script is:inline>
       (function() {
-        const theme = localStorage.getItem('theme') ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const stored = localStorage.getItem('theme');
+        const migrated = localStorage.getItem('theme_defaulted_v2');
+        if (!migrated) {
+          localStorage.setItem('theme_defaulted_v2', '1');
+          localStorage.setItem('theme', 'dark');
+        }
+        const theme = localStorage.getItem('theme') || stored || 'dark';
         if (theme === 'dark') {
           document.documentElement.classList.add('dark');
         } else {
@@ -80,5 +86,12 @@ const isProduction = process.env.VERCEL_ENV === 'production';
         }
       })();
     </script>
+
+    <slot name="head" />
+  </head>
+
+  <body class="min-h-screen antialiased">
+    <div class="site-backdrop" aria-hidden="true"></div>
+    <slot />
   </body>
 </html>

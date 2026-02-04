@@ -1,0 +1,15 @@
+# Vedang Barhate — Portfolio
+
+This site contains projects and technical writing about systems programming (Linux/eBPF) and backend engineering.
+
+## Key pages
+- Home: /
+- Projects: /projects/
+- Blog: /blog/
+- About: /about/
+- RSS: /rss.xml
+- Sitemap: /sitemap-index.xml
+
+## Notes for automated readers
+- Pages are static HTML with internal links and an RSS feed for updates.
+- Canonical URLs are set via `PUBLIC_SITE_URL` during builds.

@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import MinimalHeader from '../components/MinimalHeader.astro';
-import ScrollTimeline from '../components/ScrollTimeline.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MinimalHeader from "../components/MinimalHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 const workExperience = [
   {
@@ -57,8 +57,7 @@ const education = [
     title: "2021 - Dec 2022",
     subtitle: "MS Computer Science",
     organization: "Illinois Institute of Technology",
-    content:
-      "Focused on machine learning and databases. GPA: 3.7",
+    content: "Focused on machine learning and databases. GPA: 3.7",
   },
   {
     title: "2015 - May 2019",
@@ -76,94 +75,86 @@ const education = [
 >
   <MinimalHeader />
 
-  <main class="pt-24 pb-20 px-6 max-w-5xl mx-auto">
-    <!-- Back link -->
-    <a href="/" class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-8">
-      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-      Back to Home
-    </a>
-
-    <!-- Hero Section -->
-    <section class="mb-20">
-      <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-6">About Me</h1>
-      <div class="max-w-none">
-        <p class="text-xl text-stone-700 dark:text-stone-300 leading-relaxed mb-4">
-          I build software that ships. I care about latency, reliability, and clean APIs.
+  <main class="pt-28">
+    <section class="px-6 py-12">
+      <div class="max-w-6xl mx-auto">
+        <p class="kicker">About</p>
+        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">Vedang.</h1>
+        <p class="muted leading-relaxed mt-5 text-lg max-w-3xl">
+          I’m a full‑stack software engineer with a systems bias. I care about latency, reliability, and clean APIs.
         </p>
-        <p class="text-stone-600 dark:text-stone-400 leading-relaxed">
-          Lately I'm deep in eBPF and Linux. I write what I learn so it sticks.
+        <p class="muted leading-relaxed mt-4 max-w-3xl">
+          Lately I’m deep in eBPF and Linux internals. I write what I learn so it sticks.
         </p>
-      </div>
 
-      <!-- Quick links -->
-      <div class="flex flex-wrap gap-4 mt-8">
-        <a
-          href="/VedangBarhate_resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center px-5 py-2.5 bg-orange-500 text-white rounded-lg hover:bg-orange-400 transition-colors"
-        >
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          Download Resume
-        </a>
-        <a
-          href="https://github.com/bvedang"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center px-5 py-2.5 bg-stone-900 dark:bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors"
-        >
-          <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-          </svg>
-          GitHub
-        </a>
-        <a
-          href="https://www.linkedin.com/in/vedang-barhate17/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center px-5 py-2.5 bg-stone-900 dark:bg-stone-800 text-white rounded-lg hover:bg-stone-700 transition-colors"
-        >
-          <svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
-          LinkedIn
-        </a>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class="btn btn-primary" href="/VedangBarhate_resume.pdf" target="_blank" rel="noopener noreferrer">
+            Resume <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+          </a>
+          <a class="btn btn-ghost" href="mailto:vedangbarhate@gmail.com">
+            Email <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/bvedang" target="_blank" rel="noopener noreferrer">
+            GitHub <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+          </a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/vedang-barhate17/" target="_blank" rel="noopener noreferrer">
+            LinkedIn <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Work Experience Section -->
-    <section class="mb-20">
-      <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-4">Work Experience</h2>
-      <ScrollTimeline data={workExperience} />
+    <section class="px-6 pb-14">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="headline ink text-2xl sm:text-3xl">Experience</h2>
+        <ul class="simple-list">
+          {workExperience.map((job) => (
+            <li>
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                <p class="headline ink text-xl">
+                  {job.subtitle} <span class="muted">· {job.organization}</span>
+                </p>
+                <p class="muted text-sm" style="font-family: var(--font-mono);">
+                  {job.title}{job.duration ? ` · ${job.duration}` : ""}
+                </p>
+              </div>
+              <p class="muted mt-2 leading-relaxed">{job.content}</p>
+              {job.technologies?.length ? (
+                <div class="mt-3 flex flex-wrap gap-2">
+                  {job.technologies.map((t) => (
+                    <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
 
-    <!-- Education Section -->
-    <section>
-      <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-4">Education</h2>
-      <ScrollTimeline data={education} />
-    </section>
-
-    <!-- Contact CTA -->
-    <section class="mt-20 p-8 bg-stone-100 dark:bg-stone-900 rounded-2xl text-center">
-      <h2 class="text-2xl font-bold text-stone-900 dark:text-white mb-4">Let's Work Together</h2>
-      <p class="text-stone-600 dark:text-stone-400 mb-6 max-w-md mx-auto">
-        I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-      </p>
-      <a
-        href="mailto:vedangbarhate@gmail.com"
-        class="inline-flex items-center px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-400 transition-colors"
-      >
-        Get in Touch
-      </a>
+    <section class="px-6 pb-14">
+      <div class="max-w-6xl mx-auto">
+        <h2 class="headline ink text-2xl sm:text-3xl">Education</h2>
+        <ul class="simple-list">
+          {education.map((school) => (
+            <li>
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                <p class="headline ink text-xl">
+                  {school.subtitle} <span class="muted">· {school.organization}</span>
+                </p>
+                <p class="muted text-sm" style="font-family: var(--font-mono);">
+                  {school.title}
+                </p>
+              </div>
+              <p class="muted mt-2 leading-relaxed">{school.content}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   </main>
 
-  <!-- Simple Footer -->
-  <footer class="py-8 text-center text-stone-500 text-sm border-t border-stone-200 dark:border-stone-800">
-    <p>Built by Vedang Barhate</p>
-  </footer>
+  <SiteFooter />
 </BaseLayout>

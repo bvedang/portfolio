@@ -1,64 +1,79 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import MinimalHeader from '../../components/MinimalHeader.astro';
-import GridCard from '../../components/GridCard.astro';
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MinimalHeader from "../../components/MinimalHeader.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
 
-// Get all non-draft projects sorted by order
-const projects = (await getCollection('projects', ({ data }) => !data.draft))
-  .sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
 <BaseLayout
   title="Projects | Vedang Barhate"
-  description="Software engineering projects showcasing full-stack development, machine learning, and systems programming."
+  description="Software engineering projects spanning full-stack development, machine learning, and systems programming."
 >
   <MinimalHeader />
 
-  <main class="max-w-6xl mx-auto px-4 py-12 pt-24">
-    {/* Header */}
-    <header class="mb-12">
-      <a href="/" class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-6">
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to Home
-      </a>
-
-      <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4">Projects</h1>
-      <p class="text-stone-600 dark:text-stone-400 text-lg max-w-2xl">
-        A collection of software engineering projects spanning full-stack development, machine learning, and data analysis.
-      </p>
-    </header>
-
-    {/* Projects Grid */}
-    {projects.length === 0 ? (
-      <div class="text-center py-12">
-        <p class="text-stone-600 dark:text-stone-400 text-lg">No projects yet. Check back soon!</p>
+  <main class="pt-28">
+    <section class="px-6 py-12">
+      <div class="max-w-6xl mx-auto">
+        <p class="kicker">Projects</p>
+        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">Things I built.</h1>
+        <p class="muted leading-relaxed mt-5 text-lg max-w-2xl">
+          A small collection of work spanning full‑stack apps, data projects, and systems‑adjacent experiments.
+        </p>
       </div>
-    ) : (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project) => (
-          <GridCard
-            title={project.data.title}
-            description={project.data.description}
-            image={project.data.image}
-            tags={project.data.stack.slice(0, 3)}
-            href={`/projects/${project.slug}`}
-            type="project"
-            featured={project.data.featured}
-            githubUrl={project.data.githubUrl}
-            liveUrl={project.data.liveUrl}
-          />
-        ))}
+    </section>
+
+    <section class="px-6 pb-14">
+      <div class="max-w-6xl mx-auto">
+        {projects.length === 0 ? (
+          <div class="panel p-10 text-center">
+            <p class="muted text-lg">No projects yet. Check back soon!</p>
+          </div>
+        ) : (
+          <ul class="simple-list">
+            {projects.map((project) => (
+              <li>
+                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3">
+                  <a class="headline ink text-xl" href={`/projects/${project.slug}`}>
+                    {project.data.title}
+                  </a>
+
+                  <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm" style="font-family: var(--font-mono);">
+                    <a class="link-accent" style="border-bottom: 0;" href={`/projects/${project.slug}`}>Case study</a>
+                    {project.data.liveUrl && (
+                      <a class="link-accent" style="border-bottom: 0;" href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">
+                        Live ↗
+                      </a>
+                    )}
+                    {project.data.githubUrl && (
+                      <a class="link-accent" style="border-bottom: 0;" href={project.data.githubUrl} target="_blank" rel="noopener noreferrer">
+                        Source ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+
+                <p class="muted mt-2 leading-relaxed">{project.data.description}</p>
+
+                {project.data.stack?.length > 0 && (
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    {project.data.stack.slice(0, 6).map((t) => (
+                      <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-    )}
+    </section>
   </main>
 
-  {/* Footer */}
-  <footer class="py-12 px-4 border-t border-stone-200 dark:border-stone-800">
-    <div class="max-w-6xl mx-auto text-center text-sm text-stone-500">
-      <p>Built by Vedang Barhate</p>
-    </div>
-  </footer>
+  <SiteFooter />
 </BaseLayout>

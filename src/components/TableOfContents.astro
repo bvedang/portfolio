@@ -9,9 +9,9 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 ---
 
 {filteredHeadings.length >= 3 && (
-  <aside class="hidden xl:block fixed left-8 top-1/2 -translate-y-1/2 w-56 z-30">
-    <nav class="p-4 bg-stone-100/80 dark:bg-stone-900/80 backdrop-blur-sm rounded-lg">
-      <h2 class="text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-3">
+  <aside class="hidden xl:block fixed left-8 top-1/2 -translate-y-1/2 w-60 z-30">
+    <nav class="panel p-4">
+      <h2 class="text-xs uppercase tracking-[0.22em] muted mb-3">
         On this page
       </h2>
       <ul class="space-y-2 text-sm">
@@ -23,7 +23,7 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
           >
             <a
               href={`#${heading.slug}`}
-              class="toc-link block py-1 text-stone-600 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors line-clamp-2"
+              class="toc-link block py-1 line-clamp-2"
               data-heading={heading.slug}
             >
               {heading.text}
@@ -50,11 +50,11 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
             const id = entry.target.id;
             tocLinks.forEach(link => {
               const isActive = link.getAttribute('data-heading') === id;
-              link.classList.toggle('text-orange-500', isActive);
-              link.classList.toggle('dark:text-orange-400', isActive);
-              link.classList.toggle('font-medium', isActive);
-              link.classList.toggle('text-stone-600', !isActive);
-              link.classList.toggle('dark:text-stone-400', !isActive);
+              if (isActive) {
+                link.setAttribute('data-active', 'true');
+              } else {
+                link.removeAttribute('data-active');
+              }
             });
           }
         });
@@ -70,6 +70,21 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 </script>
 
 <style>
+  .toc-link {
+    color: var(--muted);
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .toc-link:hover {
+    color: var(--ink);
+  }
+
+  .toc-link[data-active="true"] {
+    color: var(--accent-2);
+    font-weight: 650;
+    transform: translateX(2px);
+  }
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;

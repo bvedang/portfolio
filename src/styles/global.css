@@ -1,63 +1,305 @@
 /* Tailwind v4 - CSS-first configuration */
 @import "tailwindcss";
 
-/* Custom theme (replaces tailwind.config.js) */
-@theme {
-    --font-inter: "Inter", sans-serif;
-    --color-background: #191715;
-}
-
 /* Dark mode via CSS */
 @variant dark (&:where(.dark, .dark *));
 
 /* Plugins loaded via CSS */
 @plugin "@tailwindcss/typography";
 
-/* Smooth scrolling */
-html {
-    scroll-behavior: smooth;
+/* Custom theme tokens (Tailwind v4 CSS-first) */
+@theme {
+    --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Newsreader", ui-serif, Georgia, serif;
+    --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* SVG fill for tech icons */
-svg {
-    fill: currentColor;
+@layer base {
+    :root {
+        --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
+        --font-body: "Newsreader", ui-serif, Georgia, serif;
+        --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+        /* Light (alternate) — mossy parchment */
+        --bg: #fbf6ef;
+        --surface: #f3ede5;
+        --surface-2: #e9e1d7;
+        --ink: #1a1410;
+        --muted: #6a5f55;
+        --border: #d9cfc4;
+
+        /* Ink & Ember accents */
+        --accent: #e85d04;
+        --accent-2: #9d4e15;
+        --accent-3: #ffb370;
+        --accent-ink: #0d0c0a;
+
+        /* User palette (raw) */
+        --bg-deep: #0d0c0a;
+        --bg-surface: #1a1815;
+        --text-primary: #e8e4dc;
+        --text-muted: #8a8279;
+        --accent-soft: #9d4e15;
+
+        --shadow: 0 18px 60px rgba(15, 15, 15, 0.12);
+        --shadow-tight: 0 10px 30px rgba(15, 15, 15, 0.1);
+
+        --radius: 18px;
+        --radius-sm: 12px;
+
+        --ring: color-mix(in oklab, var(--accent) 60%, white);
+    }
+
+    :root.dark {
+        /* Dark (primary) */
+        --bg: var(--bg-deep);
+        --surface: var(--bg-surface);
+        --surface-2: #24211d;
+        --ink: var(--text-primary);
+        --muted: var(--text-muted);
+        --border: #342f28;
+
+        --accent-ink: #0d0c0a;
+
+        --shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+        --shadow-tight: 0 10px 34px rgba(0, 0, 0, 0.45);
+
+        --ring: color-mix(in oklab, var(--accent) 60%, black);
+    }
+
+    html {
+        scroll-behavior: smooth;
+        color: var(--ink);
+        background: var(--bg);
+        text-rendering: geometricPrecision;
+    }
+
+    body {
+        color: var(--ink);
+        background: var(--bg);
+        font-family: var(--font-body);
+        letter-spacing: 0.01em;
+    }
+
+    svg {
+        fill: currentColor;
+    }
+
+    ::selection {
+        background: color-mix(in oklab, var(--accent) 35%, transparent);
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--ring);
+        outline-offset: 3px;
+    }
+
+    :focus:not(:focus-visible) {
+        outline: none;
+    }
 }
 
+@layer components {
+    .site-backdrop {
+        position: fixed;
+        inset: -40vmax;
+        z-index: -1;
+        pointer-events: none;
+        background:
+            radial-gradient(60vmax 40vmax at 18% 22%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
+            radial-gradient(70vmax 50vmax at 80% 12%, color-mix(in oklab, var(--accent-2) 15%, transparent), transparent 65%),
+            radial-gradient(70vmax 60vmax at 72% 82%, color-mix(in oklab, var(--accent-3) 18%, transparent), transparent 70%),
+            radial-gradient(90vmax 70vmax at 12% 86%, color-mix(in oklab, var(--ink) 6%, transparent), transparent 70%);
+        filter: saturate(1.1);
+        opacity: 0.95;
+    }
 
-/* Grid card hover animations */
-.grid-card {
-    transition:
-        transform 0.3s ease-out,
-        box-shadow 0.3s ease-out;
-}
+    .site-backdrop::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            repeating-linear-gradient(
+                90deg,
+                color-mix(in oklab, var(--border) 26%, transparent) 0 1px,
+                transparent 1px 44px
+            ),
+            repeating-linear-gradient(
+                0deg,
+                color-mix(in oklab, var(--border) 18%, transparent) 0 1px,
+                transparent 1px 44px
+            );
+        mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 70%);
+        opacity: 0.6;
+    }
 
-.grid-card:hover {
-    transform: translateY(-4px);
-}
+    .panel {
+        background: color-mix(in oklab, var(--surface) 92%, transparent);
+        border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow-tight);
+        backdrop-filter: blur(10px);
+    }
 
-/* Tag-based gradient backgrounds for blog cards */
-.gradient-linux {
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-}
+    .panel-hover {
+        transition: transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 240ms cubic-bezier(0.2, 0.9, 0.2, 1), border-color 240ms ease;
+    }
 
-.gradient-ebpf {
-    background: linear-gradient(135deg, #059669, #0d9488);
-}
+    .panel-hover:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow);
+        border-color: color-mix(in oklab, var(--accent) 40%, var(--border));
+    }
 
-.gradient-systems {
-    background: linear-gradient(135deg, #dc2626, #ea580c);
-}
+    .chip {
+        border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+        background: color-mix(in oklab, var(--surface-2) 80%, transparent);
+        color: var(--muted);
+        border-radius: 999px;
+    }
 
-.gradient-react {
-    background: linear-gradient(135deg, #06b6d4, #2563eb);
-}
+    .btn {
+        border-radius: 999px;
+        padding: 0.7rem 1.05rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
+        border: 1px solid color-mix(in oklab, var(--border) 92%, transparent);
+        transition: transform 140ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        user-select: none;
+        white-space: nowrap;
+    }
 
-.gradient-python {
-    background: linear-gradient(135deg, #eab308, #16a34a);
-}
+    .btn:active {
+        transform: translateY(1px);
+    }
 
-.gradient-default {
-    background: linear-gradient(135deg, #525252, #737373);
+    .btn-primary {
+        background: linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--accent) 60%, var(--accent-3)));
+        color: var(--accent-ink);
+        border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+        box-shadow: 0 18px 40px color-mix(in oklab, var(--accent) 20%, transparent);
+        font-family: var(--font-display);
+        font-weight: 650;
+    }
+
+    .btn-primary:hover {
+        border-color: color-mix(in oklab, var(--accent) 75%, var(--border));
+    }
+
+    .btn-ghost {
+        background: color-mix(in oklab, var(--surface) 60%, transparent);
+        color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+        border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+    }
+
+    .input {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
+        background: color-mix(in oklab, var(--surface) 75%, transparent);
+        color: var(--ink);
+        padding: 0.85rem 1rem;
+        transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    .input::placeholder {
+        color: color-mix(in oklab, var(--muted) 85%, transparent);
+    }
+
+    .input:focus {
+        outline: none;
+        border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+        box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
+        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+    }
+
+    .icon-btn {
+        height: 2.5rem;
+        width: 2.5rem;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
+        background: color-mix(in oklab, var(--surface-2) 55%, transparent);
+        transition: transform 140ms ease, border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .icon-btn:hover {
+        border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
+        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+    }
+
+    .headline {
+        font-family: var(--font-display);
+        letter-spacing: -0.03em;
+    }
+
+    .muted {
+        color: var(--muted);
+    }
+
+    .ink {
+        color: var(--ink);
+    }
+
+    .link-accent {
+        color: color-mix(in oklab, var(--accent-2) 92%, var(--ink));
+        text-decoration: none;
+        border-bottom: 1px solid color-mix(in oklab, var(--accent-2) 35%, transparent);
+        transition: border-color 160ms ease, color 160ms ease;
+    }
+
+    .link-accent:hover {
+        color: var(--accent-2);
+        border-bottom-color: color-mix(in oklab, var(--accent-2) 75%, transparent);
+    }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(16px);
+        animation: revealIn 700ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+        animation-delay: var(--d, 0ms);
+    }
+
+    @keyframes revealIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .simple-list {
+        margin-top: 1rem;
+    }
+
+    .simple-list > li {
+        padding: 1rem 0;
+        border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+    }
+
+    .simple-list > li:first-child {
+        border-top: 0;
+        padding-top: 0.25rem;
+    }
+
+    .simple-list > li:last-child {
+        padding-bottom: 0.25rem;
+    }
+
+    .kicker {
+        font-family: var(--font-mono);
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
 }
 
 /* Line clamp utility for card descriptions */
@@ -68,39 +310,68 @@ svg {
     overflow: hidden;
 }
 
-/* Section reveal animations on scroll */
-.animate-section {
-    opacity: 1;
-    transform: translateY(0);
+/* Prose styling for blog posts */
+.prose {
+    max-width: none;
+    font-family: var(--font-body);
 }
 
-/* Animation effect when scrolling into view */
-@supports (animation-timeline: view()) {
-    .animate-section {
-        animation: fadeSlideIn linear both;
-        animation-timeline: view();
-        animation-range: entry 0% cover 30%;
-    }
-
-    @keyframes fadeSlideIn {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+.prose :where(code):not(:where(pre code)) {
+    background: color-mix(in oklab, var(--surface-2) 85%, transparent);
+    color: var(--ink);
+    padding: 0.15rem 0.32rem;
+    border-radius: 0.42rem;
+    border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+    font-family: var(--font-mono);
+    font-size: 0.92em;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .animate-section {
-        animation: none;
-    }
+.prose pre {
+    border-radius: 1rem;
+    overflow-x: auto;
+    max-height: 520px;
+    overflow-y: auto;
+    background:
+        radial-gradient(800px 180px at 22% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%),
+        color-mix(in oklab, var(--surface) 92%, black);
+    border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+    box-shadow: var(--shadow-tight);
 }
 
-/* Reduced motion support - comprehensive */
+.prose pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: var(--font-mono);
+}
+
+.prose a {
+    color: color-mix(in oklab, var(--accent-2) 86%, var(--ink));
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--accent-2) 35%, transparent);
+    transition: border-color 160ms ease, color 160ms ease;
+}
+
+.prose a:hover {
+    color: var(--accent-2);
+    border-bottom-color: color-mix(in oklab, var(--accent-2) 75%, transparent);
+}
+
+.prose :where(h1, h2, h3, h4) {
+    color: var(--ink);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+}
+
+.prose :where(p, li) {
+    color: color-mix(in oklab, var(--ink) 90%, var(--muted));
+}
+
+.prose strong {
+    color: var(--ink);
+}
+
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -115,96 +386,9 @@ svg {
         scroll-behavior: auto;
     }
 
-    .grid-card:hover {
+    .reveal {
+        opacity: 1;
         transform: none;
+        animation: none;
     }
-}
-
-/* Focus styles for accessibility */
-:focus-visible {
-    outline: 2px solid #f97316; /* orange-500 */
-    outline-offset: 2px;
-}
-
-:focus:not(:focus-visible) {
-    outline: none;
-}
-
-/* Prose styling for blog posts */
-.prose {
-    max-width: none;
-}
-
-.prose pre {
-    border-radius: 0.5rem;
-    overflow-x: auto;
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.prose code {
-    background-color: #e7e5e4; /* stone-200 */
-    color: #292524; /* stone-800 */
-    padding: 0.125rem 0.25rem;
-    border-radius: 0.25rem;
-    font-size: 0.875rem;
-}
-
-:where(.dark) .prose code {
-    background-color: #292524; /* stone-800 */
-    color: #e7e5e4; /* stone-200 */
-}
-
-.prose pre code {
-    background-color: transparent;
-    padding: 0;
-}
-
-.prose a {
-    color: #ea580c; /* orange-600 */
-    transition: color 0.15s;
-}
-
-.prose a:hover {
-    color: #f97316; /* orange-500 */
-}
-
-:where(.dark) .prose a {
-    color: #fb923c; /* orange-400 */
-}
-
-:where(.dark) .prose a:hover {
-    color: #fdba74; /* orange-300 */
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
-    color: #1c1917; /* stone-900 */
-}
-
-:where(.dark) .prose h1,
-:where(.dark) .prose h2,
-:where(.dark) .prose h3,
-:where(.dark) .prose h4 {
-    color: #ffffff;
-}
-
-.prose p,
-.prose li {
-    color: #44403c; /* stone-700 */
-}
-
-:where(.dark) .prose p,
-:where(.dark) .prose li {
-    color: #d6d3d1; /* stone-300 */
-}
-
-.prose strong {
-    color: #1c1917; /* stone-900 */
-}
-
-:where(.dark) .prose strong {
-    color: #ffffff;
 }

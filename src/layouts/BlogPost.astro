@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import MinimalHeader from '../components/MinimalHeader.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
   frontmatter: {
@@ -72,7 +73,8 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
   <!-- Reading Progress Bar -->
   <div
     id="reading-progress"
-    class="fixed top-0 left-0 h-1 bg-orange-500 z-[60] transition-[width] duration-150"
+    class="fixed top-0 left-0 h-1 z-[60] transition-[width] duration-150"
+    style="background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));"
     style="width: 0%"
   ></div>
 
@@ -83,10 +85,11 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
     <TableOfContents headings={headings} />
   )}
 
-  <main class="max-w-3xl mx-auto px-4 py-12 pt-24">
+  <main class="max-w-3xl mx-auto px-4 py-12 pt-28">
     <a
       href="/blog"
-      class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors mb-8"
+      class="inline-flex items-center text-sm mb-10 link-accent"
+      style="font-family: var(--font-mono); border-bottom: 0;"
     >
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -96,11 +99,11 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
 
     <article>
       <header class="mb-8">
-        <h1 class="text-4xl md:text-5xl font-bold text-stone-900 dark:text-white mb-4">
+        <h1 class="headline text-4xl md:text-6xl mb-4 ink">
           {frontmatter.title}
         </h1>
 
-        <div class="flex flex-wrap items-center gap-4 text-sm text-stone-500 dark:text-stone-400 mb-4">
+        <div class="flex flex-wrap items-center gap-4 text-sm muted mb-4" style="font-family: var(--font-mono);">
           <time datetime={frontmatter.pubDate.toISOString()}>
             {pubDateFormatted}
           </time>
@@ -117,7 +120,8 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
           {frontmatter.tags.map((tag) => (
             <a
               href={`/blog/tags/${tag}`}
-              class="px-3 py-1 text-xs bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-full hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors"
+              class="chip px-3 py-1 text-xs hover:opacity-90 transition-opacity"
+              style="font-family: var(--font-mono);"
             >
               #{tag}
             </a>
@@ -125,22 +129,22 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
         </div>
       </header>
 
-      <div class="prose prose-stone dark:prose-invert max-w-none">
+      <div class="prose dark:prose-invert max-w-none">
         <slot />
       </div>
     </article>
 
-    <footer class="mt-16 pt-8 border-t border-stone-200 dark:border-stone-800">
+    <footer class="mt-16 pt-8 border-t" style="border-color: color-mix(in oklab, var(--border) 70%, transparent);">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <a
           href="/blog"
-          class="text-orange-500 dark:text-orange-400 hover:text-orange-600 dark:hover:text-orange-300 transition-colors"
+          class="btn btn-ghost"
         >
           View all posts
         </a>
         <a
           href="/rss.xml"
-          class="inline-flex items-center text-stone-500 dark:text-stone-400 hover:text-orange-500 dark:hover:text-orange-400 transition-colors"
+          class="btn btn-ghost"
         >
           <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
@@ -150,6 +154,8 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
       </div>
     </footer>
   </main>
+
+  <SiteFooter />
 
   <script>
     const progressBar = document.getElementById('reading-progress');
@@ -178,7 +184,10 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
       wrapper.appendChild(pre);
 
       const copyBtn = document.createElement('button');
-      copyBtn.className = 'absolute top-2 right-2 px-2 py-1 text-xs bg-stone-700 text-stone-300 rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-stone-600';
+      copyBtn.className = 'absolute top-2 right-2 px-2 py-1 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity';
+      copyBtn.style.border = '1px solid color-mix(in oklab, var(--border) 70%, transparent)';
+      copyBtn.style.background = 'color-mix(in oklab, var(--surface-2) 60%, transparent)';
+      copyBtn.style.color = 'var(--ink)';
       copyBtn.textContent = 'Copy';
       copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
 
@@ -187,10 +196,10 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString('en-US'
         try {
           await navigator.clipboard.writeText(code);
           copyBtn.textContent = 'Copied!';
-          copyBtn.classList.add('bg-green-600');
+          copyBtn.style.background = 'color-mix(in oklab, var(--accent) 38%, var(--surface-2))';
           setTimeout(() => {
             copyBtn.textContent = 'Copy';
-            copyBtn.classList.remove('bg-green-600');
+            copyBtn.style.background = 'color-mix(in oklab, var(--surface-2) 60%, transparent)';
           }, 2000);
         } catch (err) {
           copyBtn.textContent = 'Failed';
