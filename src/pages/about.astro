@@ -5,17 +5,16 @@ import SiteFooter from "../components/SiteFooter.astro";
 
 const workExperience = [
   {
-    title: "Dec 2025 - Present",
+    title: "Dec 2025 – Present",
     subtitle: "SDE II",
     organization: "Adyen",
-    duration: "Ongoing",
     content:
       "Working on Visa RTSI Disputes platform. Building reliable payment dispute resolution systems at scale.",
     technologies: ["Java", "Kotlin", "PostgreSQL", "Kafka"],
     isCurrent: true,
   },
   {
-    title: "Sept 2025 - Dec 2025",
+    title: "Sept 2025 – Dec 2025",
     subtitle: "Senior Software Engineer",
     organization: "Protocoding",
     duration: "4 Months",
@@ -24,7 +23,7 @@ const workExperience = [
     technologies: ["React Native", "TypeScript", "Node.js"],
   },
   {
-    title: "June 2024 - Sept 2025",
+    title: "June 2024 – Sept 2025",
     subtitle: "Software Development Engineer",
     organization: "FIS",
     duration: "1 Year 4 Months",
@@ -33,7 +32,7 @@ const workExperience = [
     technologies: ["Java", "Spring Boot", "PostgreSQL", "AWS"],
   },
   {
-    title: "Feb 2023 - May 2024",
+    title: "Feb 2023 – May 2024",
     subtitle: "Software Engineer",
     organization: "Opstra Tech",
     duration: "1 Year 4 Months",
@@ -42,7 +41,7 @@ const workExperience = [
     technologies: ["Python", "Elasticsearch", "React"],
   },
   {
-    title: "June 2019 - Dec 2020",
+    title: "June 2019 – Dec 2020",
     subtitle: "Software Engineer",
     organization: "Shaili Pharma Chem",
     duration: "1 Year 7 Months",
@@ -54,13 +53,13 @@ const workExperience = [
 
 const education = [
   {
-    title: "2021 - Dec 2022",
+    title: "2021 – Dec 2022",
     subtitle: "MS Computer Science",
     organization: "Illinois Institute of Technology",
     content: "Focused on machine learning and databases. GPA: 3.7",
   },
   {
-    title: "2015 - May 2019",
+    title: "2015 – May 2019",
     subtitle: "BS Computer Science",
     organization: "Parul University",
     content:
@@ -75,54 +74,51 @@ const education = [
 >
   <MinimalHeader />
 
-  <main class="pt-28">
-    <section class="px-6 py-12">
+  <main class="pt-20">
+    <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
         <p class="kicker">About</p>
-        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">Vedang.</h1>
-        <p class="muted leading-relaxed mt-5 text-lg max-w-3xl">
-          I’m a full‑stack software engineer with a systems bias. I care about latency, reliability, and clean APIs.
-        </p>
-        <p class="muted leading-relaxed mt-4 max-w-3xl">
-          Lately I’m deep in eBPF and Linux internals. I write what I learn so it sticks.
+        <p class="muted leading-relaxed mt-4 text-lg max-w-3xl">
+          Full-stack software engineer with a systems bias. I care about latency, reliability, and clean APIs. Lately I'm deep in eBPF and Linux internals — I write what I learn so it sticks.
         </p>
 
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a class="btn btn-primary" href="/VedangBarhate_resume.pdf" target="_blank" rel="noopener noreferrer">
-            Resume <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="btn btn-primary" href="mailto:vedangbarhate@gmail.com">
+            Email <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
-          <a class="btn btn-ghost" href="mailto:vedangbarhate@gmail.com">
-            Email <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+          <a class="btn btn-ghost" href="/VedangBarhate_resume.pdf" target="_blank" rel="noopener noreferrer">
+            Resume <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
           <a class="btn btn-ghost" href="https://github.com/bvedang" target="_blank" rel="noopener noreferrer">
-            GitHub <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+            GitHub <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/vedang-barhate17/" target="_blank" rel="noopener noreferrer">
-            LinkedIn <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+            LinkedIn <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
         </div>
       </div>
     </section>
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
-        <h2 class="headline ink text-2xl sm:text-3xl">Experience</h2>
+        <hr class="rule mb-10" />
+        <p class="kicker mb-6">Experience</p>
         <ul class="simple-list">
           {workExperience.map((job) => (
             <li>
               <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-                <p class="headline ink text-xl">
-                  {job.subtitle} <span class="muted">· {job.organization}</span>
+                <p class="headline ink text-lg">
+                  {job.subtitle} <span class="muted text-base">&#183; {job.organization}</span>
                 </p>
-                <p class="muted text-sm" style="font-family: var(--font-mono);">
+                <p class="text-xs" style="font-family: var(--font-mono); color: var(--muted);">
                   {job.title}{job.duration ? ` · ${job.duration}` : ""}
                 </p>
               </div>
-              <p class="muted mt-2 leading-relaxed">{job.content}</p>
+              <p class="muted mt-2 leading-relaxed text-sm">{job.content}</p>
               {job.technologies?.length ? (
                 <div class="mt-3 flex flex-wrap gap-2">
                   {job.technologies.map((t) => (
-                    <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">
+                    <span class="chip px-2.5 py-1 text-xs">
                       {t}
                     </span>
                   ))}
@@ -134,21 +130,22 @@ const education = [
       </div>
     </section>
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
-        <h2 class="headline ink text-2xl sm:text-3xl">Education</h2>
+        <hr class="rule mb-10" />
+        <p class="kicker mb-6">Education</p>
         <ul class="simple-list">
           {education.map((school) => (
             <li>
               <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
-                <p class="headline ink text-xl">
-                  {school.subtitle} <span class="muted">· {school.organization}</span>
+                <p class="headline ink text-lg">
+                  {school.subtitle} <span class="muted text-base">&#183; {school.organization}</span>
                 </p>
-                <p class="muted text-sm" style="font-family: var(--font-mono);">
+                <p class="text-xs" style="font-family: var(--font-mono); color: var(--muted);">
                   {school.title}
                 </p>
               </div>
-              <p class="muted mt-2 leading-relaxed">{school.content}</p>
+              <p class="muted mt-2 leading-relaxed text-sm">{school.content}</p>
             </li>
           ))}
         </ul>

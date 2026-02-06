@@ -55,52 +55,52 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
 
   <MinimalHeader />
 
-  <main class="pt-28">
-    <section class="px-6 py-14 sm:py-16">
+  <main class="pt-20">
+    <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
-        <p class="kicker">Software engineer</p>
-        <h1 class="headline ink text-5xl sm:text-6xl mt-4">Vedang Barhate</h1>
-        <p class="muted leading-relaxed mt-5 text-lg max-w-2xl">
+        <p class="kicker">Software Engineer</p>
+        <h1 class="headline ink text-5xl sm:text-6xl lg:text-7xl mt-4">
+          Vedang<span style="color: var(--accent);">.</span>
+        </h1>
+        <p class="muted leading-relaxed mt-6 text-lg max-w-2xl">
           I build backend systems in Java and Go. I write about eBPF, Linux internals, and shipping reliable software.
         </p>
-        <p class="muted mt-4 max-w-2xl" style="font-family: var(--font-mono);">
+        <p class="mt-4 max-w-2xl text-sm" style="font-family: var(--font-mono); color: var(--muted);">
           Currently: building dispute systems at scale.
         </p>
 
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="mt-8">
           <a class="btn btn-primary" href="mailto:vedangbarhate@gmail.com">
-            Email <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
+            Email <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
-          <a class="btn btn-ghost" href="/projects">Projects</a>
-          <a class="btn btn-ghost" href="/blog">Writing</a>
-          <a class="btn btn-ghost" href="/about">About</a>
         </div>
       </div>
     </section>
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-10">
+        <hr class="rule mb-12" />
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
           <section>
             <div class="flex items-baseline justify-between gap-4">
               <h2 class="headline ink text-xl sm:text-2xl">Projects</h2>
-              <a class="link-accent text-sm" href="/projects" style="border-bottom: 0;">All</a>
+              <a class="link-accent text-sm" href="/projects" style="font-family: var(--font-mono);">All &rarr;</a>
             </div>
 
             <ul class="simple-list">
               {projects.length === 0 ? (
                 <li>
                   <p class="muted">No featured projects yet.</p>
-                  <a class="link-accent text-sm" style="border-bottom: 0;" href="/projects">Browse all projects</a>
+                  <a class="link-accent text-sm" href="/projects">Browse all projects</a>
                 </li>
               ) : (
                 projects.slice(0, 3).map((p) => (
                   <li>
-                    <a class="headline ink text-lg" href={`/projects/${p.slug}`}>{p.data.title}</a>
-                    <p class="muted mt-2 leading-relaxed">{p.data.description}</p>
+                    <a class="headline ink text-lg hover:text-[var(--accent)] transition-colors" href={`/projects/${p.slug}`}>{p.data.title}</a>
+                    <p class="muted mt-2 leading-relaxed text-sm">{p.data.description}</p>
                     <div class="mt-3 flex flex-wrap gap-2">
                       {p.data.stack.slice(0, 4).map((t) => (
-                        <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">{t}</span>
+                        <span class="chip px-2.5 py-1 text-xs">{t}</span>
                       ))}
                     </div>
                   </li>
@@ -112,27 +112,41 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
           <section>
             <div class="flex items-baseline justify-between gap-4">
               <h2 class="headline ink text-xl sm:text-2xl">Writing</h2>
-              <a class="link-accent text-sm" href="/blog" style="border-bottom: 0;">All</a>
+              <a class="link-accent text-sm" href="/blog" style="font-family: var(--font-mono);">All &rarr;</a>
             </div>
 
             <ul class="simple-list">
               {blogPosts.length === 0 ? (
                 <li>
                   <p class="muted">No posts yet.</p>
-                  <a class="link-accent text-sm" style="border-bottom: 0;" href="/blog">Browse writing</a>
+                  <a class="link-accent text-sm" href="/blog">Browse writing</a>
                 </li>
               ) : (
                 blogPosts.map((post) => (
                   <li>
-                    <a class="headline ink text-lg" href={`/blog/${post.slug}`}>{post.data.title}</a>
-                    <p class="muted mt-2 leading-relaxed">{post.data.description}</p>
-                    <p class="muted mt-3 text-sm" style="font-family: var(--font-mono);">
+                    <a class="headline ink text-lg hover:text-[var(--accent)] transition-colors" href={`/blog/${post.slug}`}>{post.data.title}</a>
+                    <p class="muted mt-2 leading-relaxed text-sm">{post.data.description}</p>
+                    <p class="mt-3 text-xs" style="font-family: var(--font-mono); color: var(--muted);">
                       {post.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
                     </p>
                   </li>
                 ))
               )}
             </ul>
+
+            {blogPosts.length > 0 && blogPosts.length < 3 && (
+              <div class="mt-6 pt-6 border-t border-[var(--border)]">
+                <p class="muted text-xs mb-3" style="font-family: var(--font-mono);">
+                  More writing coming soon.
+                </p>
+                <a href="/rss.xml" class="btn btn-ghost text-sm">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+                  </svg>
+                  Subscribe via RSS
+                </a>
+              </div>
+            )}
           </section>
         </div>
       </div>

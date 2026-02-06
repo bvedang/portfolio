@@ -25,14 +25,14 @@ const { tag, posts } = Astro.props;
 <BaseLayout title={`Posts tagged "${tag}" | Vedang Barhate`} description={`Blog posts about ${tag}`}>
   <MinimalHeader />
 
-  <main class="pt-28">
-    <section class="px-6 py-12">
+  <main class="pt-20">
+    <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
         <p class="kicker">Tag</p>
         <h1 class="headline ink text-3xl sm:text-4xl lg:text-5xl mt-4">
           #{tag}
         </h1>
-        <p class="muted mt-4" style="font-family: var(--font-mono);">
+        <p class="muted mt-4 text-sm" style="font-family: var(--font-mono);">
           {posts.length} post{posts.length !== 1 ? "s" : ""}
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
@@ -42,31 +42,42 @@ const { tag, posts } = Astro.props;
       </div>
     </section>
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
+        <hr class="rule mb-8" />
         <ul class="simple-list">
           {posts.map((post) => (
             <li>
-              <a class="headline ink text-xl" href={`/blog/${post.slug}`}>
+              <a class="headline ink text-xl hover:text-[var(--accent)] transition-colors" href={`/blog/${post.slug}`}>
                 {post.data.title}
               </a>
-              <p class="muted mt-2 leading-relaxed">{post.data.description}</p>
+              <p class="muted mt-2 leading-relaxed text-sm">{post.data.description}</p>
               <div class="mt-3 flex flex-wrap gap-2">
                 {post.data.tags.map((t) => (
                   <span
-                    class="chip px-3 py-1 text-xs"
-                    style={`font-family: var(--font-mono); ${t === tag ? "background: color-mix(in oklab, var(--accent) 18%, transparent); border-color: color-mix(in oklab, var(--accent) 32%, var(--border)); color: var(--ink);" : ""}`}
+                    class="chip px-2.5 py-1 text-xs"
+                    style={t === tag ? "border-color: var(--accent); color: var(--accent);" : ""}
                   >
                     {t}
                   </span>
                 ))}
               </div>
-              <p class="muted mt-3 text-sm" style="font-family: var(--font-mono);">
+              <p class="mt-3 text-xs" style="font-family: var(--font-mono); color: var(--muted);">
                 {post.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
               </p>
             </li>
           ))}
         </ul>
+
+        <hr class="rule mt-12" />
+        <footer class="pt-8">
+          <a href="/rss.xml" class="btn btn-ghost">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>
+            </svg>
+            Subscribe via RSS
+          </a>
+        </footer>
       </div>
     </section>
   </main>

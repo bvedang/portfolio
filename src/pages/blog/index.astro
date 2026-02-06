@@ -14,26 +14,27 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 <BaseLayout title="Blog | Vedang Barhate" description="Technical blog posts about eBPF, systems programming, and software engineering.">
   <MinimalHeader />
 
-  <main class="pt-28">
-    <section class="px-6 py-12">
+  <main class="pt-20">
+    <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
         <p class="kicker">Writing</p>
-        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">Notes.</h1>
-        <p class="muted leading-relaxed mt-5 text-lg max-w-2xl">
+        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">
+          Notes<span style="color: var(--accent);">.</span>
+        </h1>
+        <p class="muted leading-relaxed mt-6 text-lg max-w-2xl">
           Technical writing about eBPF, Linux, systems programming, and software engineering.
         </p>
       </div>
     </section>
 
     {allTags.length > 0 && (
-      <section class="px-6 pb-6">
+      <section class="px-6 pb-4">
         <div class="max-w-6xl mx-auto">
           <div class="flex flex-wrap gap-2">
             {allTags.map((tag) => (
               <a
                 href={`/blog/tags/${tag}`}
-                class="chip px-3 py-1.5 text-sm hover:opacity-90 transition-opacity"
-                style="font-family: var(--font-mono);"
+                class="chip px-3 py-2 sm:py-1.5 text-xs hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
               >
                 #{tag}
               </a>
@@ -43,28 +44,31 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
       </section>
     )}
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
+        <hr class="rule mb-6" />
         {posts.length === 0 ? (
-          <div class="panel p-10 text-center">
+          <div class="py-10 text-center">
             <p class="muted text-lg">No posts yet. Check back soon!</p>
           </div>
         ) : (
           <ul class="simple-list">
             {posts.map((post) => (
-              <li>
-                <a class="headline ink text-xl" href={`/blog/${post.slug}`}>
-                  {post.data.title}
-                </a>
-                <p class="muted mt-2 leading-relaxed">{post.data.description}</p>
-                <div class="mt-3 flex flex-wrap gap-2">
-                  {post.data.tags.map((tag) => (
-                    <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">
-                      {tag}
-                    </span>
-                  ))}
+              <li class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2">
+                <div class="flex-1">
+                  <a class="headline ink text-lg hover:text-[var(--accent)] transition-colors" href={`/blog/${post.slug}`}>
+                    {post.data.title}
+                  </a>
+                  <p class="muted mt-1.5 leading-relaxed text-sm">{post.data.description}</p>
+                  <div class="mt-2 flex flex-wrap gap-2">
+                    {post.data.tags.map((tag) => (
+                      <span class="chip px-2.5 py-1 text-xs">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <p class="muted mt-3 text-sm" style="font-family: var(--font-mono);">
+                <p class="text-xs shrink-0" style="font-family: var(--font-mono); color: var(--muted);">
                   {post.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
                 </p>
               </li>
@@ -72,7 +76,13 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
           </ul>
         )}
 
-        <footer class="mt-12 pt-8 border-t" style="border-color: color-mix(in oklab, var(--border) 70%, transparent);">
+        <hr class="rule mt-8" />
+        <footer class="pt-8">
+          {posts.length < 3 && (
+            <p class="muted text-xs mb-6" style="font-family: var(--font-mono);">
+              More writing coming soon.
+            </p>
+          )}
           <a href="/rss.xml" class="btn btn-ghost">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/>

@@ -15,58 +15,59 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft)).so
 >
   <MinimalHeader />
 
-  <main class="pt-28">
-    <section class="px-6 py-12">
+  <main class="pt-20">
+    <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
         <p class="kicker">Projects</p>
-        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">Things I built.</h1>
-        <p class="muted leading-relaxed mt-5 text-lg max-w-2xl">
-          A small collection of work spanning full‑stack apps, data projects, and systems‑adjacent experiments.
+        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">
+          Things I built<span style="color: var(--accent);">.</span>
+        </h1>
+        <p class="muted leading-relaxed mt-6 text-lg max-w-2xl">
+          A small collection of work spanning full-stack apps, data projects, and systems-adjacent experiments.
         </p>
       </div>
     </section>
 
-    <section class="px-6 pb-14">
+    <section class="px-6 pb-16 sm:pb-20">
       <div class="max-w-6xl mx-auto">
+        <hr class="rule mb-8" />
         {projects.length === 0 ? (
-          <div class="panel p-10 text-center">
+          <div class="py-10 text-center">
             <p class="muted text-lg">No projects yet. Check back soon!</p>
           </div>
         ) : (
           <ul class="simple-list">
             {projects.map((project) => (
               <li>
-                <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-3">
-                  <a class="headline ink text-xl" href={`/projects/${project.slug}`}>
-                    {project.data.title}
-                  </a>
+                <a class="headline ink text-xl hover:text-[var(--accent)] transition-colors" href={`/projects/${project.slug}`}>
+                  {project.data.title}
+                </a>
 
-                  <div class="flex flex-wrap gap-x-4 gap-y-2 text-sm" style="font-family: var(--font-mono);">
-                    <a class="link-accent" style="border-bottom: 0;" href={`/projects/${project.slug}`}>Case study</a>
-                    {project.data.liveUrl && (
-                      <a class="link-accent" style="border-bottom: 0;" href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">
-                        Live ↗
-                      </a>
-                    )}
-                    {project.data.githubUrl && (
-                      <a class="link-accent" style="border-bottom: 0;" href={project.data.githubUrl} target="_blank" rel="noopener noreferrer">
-                        Source ↗
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <p class="muted mt-2 leading-relaxed">{project.data.description}</p>
+                <p class="muted mt-2 leading-relaxed text-sm">{project.data.description}</p>
 
                 {project.data.stack?.length > 0 && (
                   <div class="mt-3 flex flex-wrap gap-2">
                     {project.data.stack.slice(0, 6).map((t) => (
-                      <span class="chip px-3 py-1 text-xs" style="font-family: var(--font-mono);">
+                      <span class="chip px-2.5 py-1 text-xs">
                         {t}
                       </span>
                     ))}
                   </div>
                 )}
+
+                <div class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs" style="font-family: var(--font-mono);">
+                  <a class="link-accent" href={`/projects/${project.slug}`}>Case study</a>
+                  {project.data.liveUrl && (
+                    <a class="link-accent" href={project.data.liveUrl} target="_blank" rel="noopener noreferrer">
+                      Live &#8599;
+                    </a>
+                  )}
+                  {project.data.githubUrl && (
+                    <a class="link-accent" href={project.data.githubUrl} target="_blank" rel="noopener noreferrer">
+                      Source &#8599;
+                    </a>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

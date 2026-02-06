@@ -16,57 +16,47 @@ const socials = [
 ---
 
 <footer class="mt-20 px-6 pb-10">
-  <div class="max-w-6xl mx-auto panel overflow-hidden">
-    <div class="h-1 w-full" style="background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3)); opacity: 0.9;"></div>
+  <div class="max-w-6xl mx-auto">
+    <hr class="rule-accent mb-10" />
 
-    <div class="p-6 sm:p-8">
-      <div class="flex flex-col md:flex-row gap-10 md:items-start md:justify-between">
-        <div class="max-w-xl">
-          <p class="headline text-xl sm:text-2xl ink">Vedang Barhate</p>
-          <p class="mt-2 muted leading-relaxed">
-            Systems-minded full‑stack engineer. I care about latency, reliability, and clean APIs.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            <span class="chip px-3 py-1 text-xs">Java</span>
-            <span class="chip px-3 py-1 text-xs">Go</span>
-            <span class="chip px-3 py-1 text-xs">Linux</span>
-            <span class="chip px-3 py-1 text-xs">eBPF</span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-10">
-          <div>
-            <p class="text-xs uppercase tracking-[0.22em] muted">Site</p>
-            <ul class="mt-4 space-y-2">
-              {links.map((l) => (
-                <li>
-                  <a class="link-accent text-sm" href={l.href}>{l.label}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <p class="text-xs uppercase tracking-[0.22em] muted">Elsewhere</p>
-            <ul class="mt-4 space-y-2">
-              {socials.map((s) => (
-                <li>
-                  <a class="link-accent text-sm" href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}>
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-10 pt-6 border-t" style="border-color: color-mix(in oklab, var(--border) 75%, transparent);">
-        <p class="text-xs muted">
-          © {year}. Built with Astro.
+    <div class="flex flex-col md:flex-row gap-10 md:items-start md:justify-between">
+      <div class="max-w-xl">
+        <p class="headline text-xl sm:text-2xl ink">Vedang Barhate</p>
+        <p class="mt-2 muted leading-relaxed text-sm">
+          Systems-minded full-stack engineer. I care about latency, reliability, and clean APIs.
         </p>
       </div>
+
+      <div class="grid grid-cols-2 gap-10">
+        <div>
+          <p class="kicker mb-4">Site</p>
+          <ul class="space-y-2">
+            {links.map((l) => (
+              <li>
+                <a class="link-accent text-sm" href={l.href}>{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p class="kicker mb-4">Elsewhere</p>
+          <ul class="space-y-2">
+            {socials.map((s) => (
+              <li>
+                <a class="link-accent text-sm" href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
+
+    <hr class="rule mt-10 mb-6" />
+    <p class="text-xs muted" style="font-family: var(--font-mono);">
+      &copy; {year} Vedang Barhate. Built with Astro.
+    </p>
   </div>
 </footer>
-

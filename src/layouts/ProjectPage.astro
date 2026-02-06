@@ -1,177 +1,219 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import MinimalHeader from '../components/MinimalHeader.astro';
-import SiteFooter from '../components/SiteFooter.astro';
+import BaseLayout from "./BaseLayout.astro";
+import MinimalHeader from "../components/MinimalHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
-  frontmatter: {
-    title: string;
-    description: string;
-    problem?: string;
-    approach?: string;
-    impact?: string;
-    stack: string[];
-    githubUrl?: string;
-    liveUrl?: string;
-    image?: string;
-  };
+    frontmatter: {
+        title: string;
+        description: string;
+        problem?: string;
+        approach?: string;
+        impact?: string;
+        stack: string[];
+        githubUrl?: string;
+        liveUrl?: string;
+        image?: string;
+    };
 }
 
 const { frontmatter } = Astro.props;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
 const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
 const ogImage = frontmatter.image
-  ? `${siteUrl}${frontmatter.image}`
-  : `${siteUrl}/portfolio.png`;
+    ? `${siteUrl}${frontmatter.image}`
+    : `${siteUrl}/portfolio.png`;
 ---
 
 <BaseLayout
-  title={`${frontmatter.title} | Vedang Barhate`}
-  description={frontmatter.description}
-  image={frontmatter.image || '/portfolio.png'}
+    title={`${frontmatter.title} | Vedang Barhate`}
+    description={frontmatter.description}
+    image={frontmatter.image || "/portfolio.png"}
 >
-  <head slot="head">
-    <link rel="canonical" href={canonicalUrl} />
+    <head slot="head">
+        <link rel="canonical" href={canonicalUrl} />
 
-    {/* Project JSON-LD */}
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "SoftwareSourceCode",
-      "name": frontmatter.title,
-      "description": frontmatter.description,
-      "image": ogImage,
-      "author": {
-        "@type": "Person",
-        "name": "Vedang Barhate",
-        "url": siteUrl
-      },
-      "codeRepository": frontmatter.githubUrl,
-      "programmingLanguage": frontmatter.stack,
-      "mainEntityOfPage": canonicalUrl
-    })} />
-  </head>
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "SoftwareSourceCode",
+                name: frontmatter.title,
+                description: frontmatter.description,
+                image: ogImage,
+                author: {
+                    "@type": "Person",
+                    name: "Vedang Barhate",
+                    url: siteUrl,
+                },
+                codeRepository: frontmatter.githubUrl,
+                programmingLanguage: frontmatter.stack,
+                mainEntityOfPage: canonicalUrl,
+            })}
+        />
+    </head>
 
-  <MinimalHeader />
+    <MinimalHeader />
 
-  <main class="max-w-4xl mx-auto px-4 py-12 pt-28">
-    {/* Back to projects */}
-    <a
-      href="/projects"
-      class="inline-flex items-center text-sm mb-10 link-accent"
-      style="font-family: var(--font-mono); border-bottom: 0;"
-    >
-      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-      Back to Projects
-    </a>
-
-    <article>
-      {/* Hero Image */}
-      {frontmatter.image && (
-        <div class="mb-10 overflow-hidden panel">
-          <img
-            src={frontmatter.image}
-            alt={frontmatter.title}
-            width={1200}
-            height={630}
-            class="w-full h-auto object-cover"
-          />
-        </div>
-      )}
-
-      {/* Header */}
-      <header class="mb-8">
-        <h1 class="headline text-4xl md:text-6xl ink mb-4">
-          {frontmatter.title}
-        </h1>
-
-        <p class="text-lg sm:text-xl muted mb-8 leading-relaxed">
-          {frontmatter.description}
-        </p>
-
-        {/* Action Links */}
-        <div class="flex flex-wrap gap-3">
-          {frontmatter.liveUrl && (
-            <a
-              href={frontmatter.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-primary"
+    <main class="max-w-4xl mx-auto px-4 py-12 pt-24">
+        <a
+            href="/projects"
+            class="inline-flex items-center text-sm mb-10 link-accent"
+            style="font-family: var(--font-mono);"
+        >
+            <svg
+                class="w-4 h-4 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
-              View Live <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
-            </a>
-          )}
-          {frontmatter.githubUrl && (
-            <a
-              href={frontmatter.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-ghost"
-            >
-              View Source <span aria-hidden="true" style="font-family: var(--font-mono);">↗</span>
-            </a>
-          )}
-        </div>
-      </header>
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Projects
+        </a>
 
-      {/* Case Study Sections */}
-      {(frontmatter.problem || frontmatter.approach || frontmatter.impact) && (
-        <div class="grid md:grid-cols-3 gap-6 mb-12">
-          {frontmatter.problem && (
-            <div class="panel p-6">
-              <h2 class="text-xs uppercase tracking-[0.22em] muted mb-3" style="font-family: var(--font-mono);">Problem</h2>
-              <p class="muted leading-relaxed">{frontmatter.problem}</p>
+        <article>
+            {
+                frontmatter.image && (
+                    <div class="mb-10 overflow-hidden border border-[var(--border)]" style="border-radius: var(--radius);">
+                        <img
+                            src={frontmatter.image}
+                            alt={frontmatter.title}
+                            width={1200}
+                            height={630}
+                            class="w-full h-auto object-cover"
+                        />
+                    </div>
+                )
+            }
+
+            <header class="mb-10">
+                <h1 class="headline text-3xl sm:text-4xl md:text-5xl ink mb-4" style="letter-spacing: -0.04em;">
+                    {frontmatter.title}
+                </h1>
+
+                <p class="text-lg muted mb-8 leading-relaxed">
+                    {frontmatter.description}
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                    {
+                        frontmatter.liveUrl && (
+                            <a
+                                href={frontmatter.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-primary"
+                            >
+                                View Live
+                                <span
+                                    aria-hidden="true"
+                                    style="font-family: var(--font-mono);"
+                                >
+                                    &#8599;
+                                </span>
+                            </a>
+                        )
+                    }
+                    {
+                        frontmatter.githubUrl && (
+                            <a
+                                href={frontmatter.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="btn btn-ghost"
+                            >
+                                View Source
+                                <span
+                                    aria-hidden="true"
+                                    style="font-family: var(--font-mono);"
+                                >
+                                    &#8599;
+                                </span>
+                            </a>
+                        )
+                    }
+                </div>
+            </header>
+
+            {
+                (frontmatter.problem ||
+                    frontmatter.approach ||
+                    frontmatter.impact) && (
+                    <div class="grid md:grid-cols-3 gap-0 mb-12 border border-[var(--border)]" style="border-radius: var(--radius); overflow: hidden;">
+                        {frontmatter.problem && (
+                            <div class="p-6 bg-[var(--surface)]">
+                                <h2
+                                    class="kicker mb-3"
+                                >
+                                    Problem
+                                </h2>
+                                <p class="muted leading-relaxed text-sm">
+                                    {frontmatter.problem}
+                                </p>
+                            </div>
+                        )}
+                        {frontmatter.approach && (
+                            <div class="p-6 bg-[var(--surface)] border-t md:border-t-0 md:border-l border-[var(--border)]">
+                                <h2
+                                    class="kicker mb-3"
+                                >
+                                    Approach
+                                </h2>
+                                <p class="muted leading-relaxed text-sm">
+                                    {frontmatter.approach}
+                                </p>
+                            </div>
+                        )}
+                        {frontmatter.impact && (
+                            <div class="p-6 bg-[var(--surface)] border-t md:border-t-0 md:border-l border-[var(--border)]">
+                                <h2
+                                    class="kicker mb-3"
+                                >
+                                    Impact
+                                </h2>
+                                <p class="muted leading-relaxed text-sm">
+                                    {frontmatter.impact}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                )
+            }
+
+            {
+                frontmatter.stack && frontmatter.stack.length > 0 && (
+                    <div class="mb-12">
+                        <h2 class="kicker mb-4">
+                            Tech Stack
+                        </h2>
+                        <div class="flex flex-wrap gap-2">
+                            {frontmatter.stack.map((tech) => (
+                                <span class="chip px-2.5 py-1 text-xs">
+                                    {tech}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                )
+            }
+
+            <hr class="rule mb-10" />
+
+            <div class="prose dark:prose-invert max-w-none">
+                <slot />
             </div>
-          )}
-          {frontmatter.approach && (
-            <div class="panel p-6">
-              <h2 class="text-xs uppercase tracking-[0.22em] muted mb-3" style="font-family: var(--font-mono);">Approach</h2>
-              <p class="muted leading-relaxed">{frontmatter.approach}</p>
-            </div>
-          )}
-          {frontmatter.impact && (
-            <div class="panel p-6">
-              <h2 class="text-xs uppercase tracking-[0.22em] muted mb-3" style="font-family: var(--font-mono);">Impact</h2>
-              <p class="muted leading-relaxed">{frontmatter.impact}</p>
-            </div>
-          )}
-        </div>
-      )}
+        </article>
 
-      {/* Tech Stack */}
-      {frontmatter.stack && frontmatter.stack.length > 0 && (
-        <div class="mb-12">
-          <h2 class="text-xs uppercase tracking-[0.22em] muted mb-4" style="font-family: var(--font-mono);">Tech Stack</h2>
-          <div class="flex flex-wrap gap-2">
-            {frontmatter.stack.map((tech) => (
-              <span class="chip px-3 py-1.5 text-sm" style="font-family: var(--font-mono);">
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
+        <hr class="rule mt-16" />
+        <footer class="pt-8">
+            <a href="/projects" class="btn btn-ghost"> View all projects </a>
+        </footer>
+    </main>
 
-      {/* Content */}
-      <div class="prose dark:prose-invert max-w-none">
-        <slot />
-      </div>
-    </article>
-
-    {/* Footer */}
-    <footer class="mt-16 pt-8 border-t" style="border-color: color-mix(in oklab, var(--border) 70%, transparent);">
-      <a
-        href="/projects"
-        class="btn btn-ghost"
-      >
-        View all projects
-      </a>
-    </footer>
-  </main>
-
-  <SiteFooter />
+    <SiteFooter />
 </BaseLayout>

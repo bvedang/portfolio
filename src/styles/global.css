@@ -9,62 +9,60 @@
 
 /* Custom theme tokens (Tailwind v4 CSS-first) */
 @theme {
-    --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
-    --font-body: "Newsreader", ui-serif, Georgia, serif;
-    --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-display: "Fraunces", ui-serif, Georgia, serif;
+    --font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:
+        "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
     :root {
-        --font-display: "Syne", ui-sans-serif, system-ui, sans-serif;
-        --font-body: "Newsreader", ui-serif, Georgia, serif;
-        --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+        --font-display: "Fraunces", ui-serif, Georgia, serif;
+        --font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
+        --font-mono:
+            "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-        /* Light (alternate) — mossy parchment */
-        --bg: #fbf6ef;
-        --surface: #f3ede5;
-        --surface-2: #e9e1d7;
-        --ink: #1a1410;
-        --muted: #6a5f55;
-        --border: #d9cfc4;
+        /* Light mode — clean zinc scale */
+        --bg: #fafafa;
+        --surface: #f4f4f5;
+        --surface-2: #e4e4e7;
+        --ink: #09090b;
+        --muted: #71717a;
+        --border: #e4e4e7;
 
-        /* Ink & Ember accents */
-        --accent: #e85d04;
-        --accent-2: #9d4e15;
-        --accent-3: #ffb370;
-        --accent-ink: #0d0c0a;
+        /* Signal red accents */
+        --accent: #dc2626;
+        --accent-2: #991b1b;
+        --accent-3: #fca5a5;
+        --accent-ink: #fafafa;
 
-        /* User palette (raw) */
-        --bg-deep: #0d0c0a;
-        --bg-surface: #1a1815;
-        --text-primary: #e8e4dc;
-        --text-muted: #8a8279;
-        --accent-soft: #9d4e15;
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        --shadow-tight: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-        --shadow: 0 18px 60px rgba(15, 15, 15, 0.12);
-        --shadow-tight: 0 10px 30px rgba(15, 15, 15, 0.1);
+        --radius: 3px;
+        --radius-sm: 2px;
 
-        --radius: 18px;
-        --radius-sm: 12px;
-
-        --ring: color-mix(in oklab, var(--accent) 60%, white);
+        --ring: var(--accent);
     }
 
     :root.dark {
-        /* Dark (primary) */
-        --bg: var(--bg-deep);
-        --surface: var(--bg-surface);
-        --surface-2: #24211d;
-        --ink: var(--text-primary);
-        --muted: var(--text-muted);
-        --border: #342f28;
+        /* Dark (primary) — near-black zinc */
+        --bg: #09090b;
+        --surface: #18181b;
+        --surface-2: #27272a;
+        --ink: #fafafa;
+        --muted: #a1a1aa;
+        --border: #27272a;
 
-        --accent-ink: #0d0c0a;
+        --accent: #dc2626;
+        --accent-2: #991b1b;
+        --accent-3: #fca5a5;
+        --accent-ink: #fafafa;
 
-        --shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
-        --shadow-tight: 0 10px 34px rgba(0, 0, 0, 0.45);
+        --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-tight: 0 1px 2px rgba(0, 0, 0, 0.2);
 
-        --ring: color-mix(in oklab, var(--accent) 60%, black);
+        --ring: var(--accent);
     }
 
     html {
@@ -78,7 +76,7 @@
         color: var(--ink);
         background: var(--bg);
         font-family: var(--font-body);
-        letter-spacing: 0.01em;
+        letter-spacing: -0.01em;
     }
 
     svg {
@@ -86,7 +84,7 @@
     }
 
     ::selection {
-        background: color-mix(in oklab, var(--accent) 35%, transparent);
+        background: color-mix(in oklab, var(--accent) 25%, transparent);
     }
 
     :focus-visible {
@@ -100,74 +98,37 @@
 }
 
 @layer components {
-    .site-backdrop {
-        position: fixed;
-        inset: -40vmax;
-        z-index: -1;
-        pointer-events: none;
-        background:
-            radial-gradient(60vmax 40vmax at 18% 22%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 60%),
-            radial-gradient(70vmax 50vmax at 80% 12%, color-mix(in oklab, var(--accent-2) 15%, transparent), transparent 65%),
-            radial-gradient(70vmax 60vmax at 72% 82%, color-mix(in oklab, var(--accent-3) 18%, transparent), transparent 70%),
-            radial-gradient(90vmax 70vmax at 12% 86%, color-mix(in oklab, var(--ink) 6%, transparent), transparent 70%);
-        filter: saturate(1.1);
-        opacity: 0.95;
-    }
-
-    .site-backdrop::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background:
-            repeating-linear-gradient(
-                90deg,
-                color-mix(in oklab, var(--border) 26%, transparent) 0 1px,
-                transparent 1px 44px
-            ),
-            repeating-linear-gradient(
-                0deg,
-                color-mix(in oklab, var(--border) 18%, transparent) 0 1px,
-                transparent 1px 44px
-            );
-        mask-image: radial-gradient(circle at 50% 35%, black 30%, transparent 70%);
-        opacity: 0.6;
-    }
-
     .panel {
-        background: color-mix(in oklab, var(--surface) 92%, transparent);
-        border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+        background: var(--surface);
+        border: 1px solid var(--border);
         border-radius: var(--radius);
-        box-shadow: var(--shadow-tight);
-        backdrop-filter: blur(10px);
-    }
-
-    .panel-hover {
-        transition: transform 240ms cubic-bezier(0.2, 0.9, 0.2, 1), box-shadow 240ms cubic-bezier(0.2, 0.9, 0.2, 1), border-color 240ms ease;
-    }
-
-    .panel-hover:hover {
-        transform: translateY(-6px);
-        box-shadow: var(--shadow);
-        border-color: color-mix(in oklab, var(--accent) 40%, var(--border));
     }
 
     .chip {
-        border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
-        background: color-mix(in oklab, var(--surface-2) 80%, transparent);
+        padding: 0.25rem 0.625rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
         color: var(--muted);
-        border-radius: 999px;
+        border-radius: var(--radius-sm);
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
     }
 
     .btn {
-        border-radius: 999px;
-        padding: 0.7rem 1.05rem;
-        font-size: 0.95rem;
-        letter-spacing: 0.02em;
-        border: 1px solid color-mix(in oklab, var(--border) 92%, transparent);
-        transition: transform 140ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+        border-radius: var(--radius);
+        padding: 0.65rem 1.1rem;
+        font-size: 0.875rem;
+        font-family: var(--font-body);
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        border: 1px solid var(--border);
+        transition:
+            background-color 150ms ease,
+            border-color 150ms ease,
+            color 150ms ease;
         display: inline-flex;
         align-items: center;
-        gap: 0.55rem;
+        gap: 0.5rem;
         user-select: none;
         white-space: nowrap;
     }
@@ -177,68 +138,32 @@
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--accent) 60%, var(--accent-3)));
+        background: var(--accent);
         color: var(--accent-ink);
-        border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
-        box-shadow: 0 18px 40px color-mix(in oklab, var(--accent) 20%, transparent);
-        font-family: var(--font-display);
-        font-weight: 650;
+        border-color: var(--accent);
+        font-weight: 600;
     }
 
     .btn-primary:hover {
-        border-color: color-mix(in oklab, var(--accent) 75%, var(--border));
+        background: var(--accent-2);
+        border-color: var(--accent-2);
     }
 
     .btn-ghost {
-        background: color-mix(in oklab, var(--surface) 60%, transparent);
+        background: transparent;
         color: var(--ink);
+        border-color: var(--border);
     }
 
     .btn-ghost:hover {
-        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
-        border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
-    }
-
-    .input {
-        width: 100%;
-        border-radius: 1rem;
-        border: 1px solid color-mix(in oklab, var(--border) 85%, transparent);
-        background: color-mix(in oklab, var(--surface) 75%, transparent);
-        color: var(--ink);
-        padding: 0.85rem 1rem;
-        transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
-    }
-
-    .input::placeholder {
-        color: color-mix(in oklab, var(--muted) 85%, transparent);
-    }
-
-    .input:focus {
-        outline: none;
-        border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
-        box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
-        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
-    }
-
-    .icon-btn {
-        height: 2.5rem;
-        width: 2.5rem;
-        border-radius: 999px;
-        display: grid;
-        place-items: center;
-        border: 1px solid color-mix(in oklab, var(--border) 78%, transparent);
-        background: color-mix(in oklab, var(--surface-2) 55%, transparent);
-        transition: transform 140ms ease, border-color 160ms ease, background-color 160ms ease;
-    }
-
-    .icon-btn:hover {
-        border-color: color-mix(in oklab, var(--accent-2) 35%, var(--border));
-        background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+        border-color: var(--accent);
+        color: var(--accent);
     }
 
     .headline {
         font-family: var(--font-display);
         letter-spacing: -0.03em;
+        font-optical-sizing: auto;
     }
 
     .muted {
@@ -250,29 +175,17 @@
     }
 
     .link-accent {
-        color: color-mix(in oklab, var(--accent-2) 92%, var(--ink));
+        color: var(--accent);
         text-decoration: none;
-        border-bottom: 1px solid color-mix(in oklab, var(--accent-2) 35%, transparent);
-        transition: border-color 160ms ease, color 160ms ease;
+        border-bottom: 1px solid transparent;
+        transition:
+            border-color 150ms ease,
+            color 150ms ease;
     }
 
     .link-accent:hover {
         color: var(--accent-2);
-        border-bottom-color: color-mix(in oklab, var(--accent-2) 75%, transparent);
-    }
-
-    .reveal {
-        opacity: 0;
-        transform: translateY(16px);
-        animation: revealIn 700ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
-        animation-delay: var(--d, 0ms);
-    }
-
-    @keyframes revealIn {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        border-bottom-color: var(--accent);
     }
 
     .simple-list {
@@ -280,8 +193,8 @@
     }
 
     .simple-list > li {
-        padding: 1rem 0;
-        border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+        padding: 1.25rem 0;
+        border-top: 1px solid var(--border);
     }
 
     .simple-list > li:first-child {
@@ -298,7 +211,33 @@
         text-transform: uppercase;
         letter-spacing: 0.24em;
         font-size: 0.75rem;
+        color: var(--accent);
+    }
+
+    .rule {
+        border: 0;
+        border-top: 1px solid var(--border);
+    }
+
+    .rule-accent {
+        border: 0;
+        border-top: 2px solid var(--accent);
+    }
+
+    .copy-btn {
+        border: 1px solid var(--border);
+        background: var(--surface);
         color: var(--muted);
+        border-radius: var(--radius);
+        font-family: var(--font-mono);
+        transition:
+            border-color 150ms ease,
+            color 150ms ease;
+    }
+
+    .copy-btn-copied {
+        border-color: var(--accent);
+        color: var(--accent);
     }
 }
 
@@ -317,25 +256,22 @@
 }
 
 .prose :where(code):not(:where(pre code)) {
-    background: color-mix(in oklab, var(--surface-2) 85%, transparent);
+    background: var(--surface-2);
     color: var(--ink);
-    padding: 0.15rem 0.32rem;
-    border-radius: 0.42rem;
-    border: 1px solid color-mix(in oklab, var(--border) 90%, transparent);
+    padding: 0.15rem 0.35rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
     font-family: var(--font-mono);
-    font-size: 0.92em;
+    font-size: 0.88em;
 }
 
 .prose pre {
-    border-radius: 1rem;
+    border-radius: var(--radius);
     overflow-x: auto;
     max-height: 520px;
     overflow-y: auto;
-    background:
-        radial-gradient(800px 180px at 22% 0%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%),
-        color-mix(in oklab, var(--surface) 92%, black);
-    border: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
-    box-shadow: var(--shadow-tight);
+    background: var(--surface);
+    border: 1px solid var(--border);
 }
 
 .prose pre code {
@@ -346,21 +282,23 @@
 }
 
 .prose a {
-    color: color-mix(in oklab, var(--accent-2) 86%, var(--ink));
+    color: var(--accent);
     text-decoration: none;
-    border-bottom: 1px solid color-mix(in oklab, var(--accent-2) 35%, transparent);
-    transition: border-color 160ms ease, color 160ms ease;
+    border-bottom: 1px solid transparent;
+    transition:
+        border-color 150ms ease,
+        color 150ms ease;
 }
 
 .prose a:hover {
     color: var(--accent-2);
-    border-bottom-color: color-mix(in oklab, var(--accent-2) 75%, transparent);
+    border-bottom-color: var(--accent);
 }
 
 .prose :where(h1, h2, h3, h4) {
     color: var(--ink);
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 
 .prose :where(p, li) {
@@ -369,6 +307,15 @@
 
 .prose strong {
     color: var(--ink);
+}
+
+.prose :where(hr) {
+    border-color: var(--border);
+}
+
+.prose :where(blockquote) {
+    border-left-color: var(--accent);
+    color: var(--muted);
 }
 
 /* Reduced motion support */
@@ -386,9 +333,4 @@
         scroll-behavior: auto;
     }
 
-    .reveal {
-        opacity: 1;
-        transform: none;
-        animation: none;
-    }
 }

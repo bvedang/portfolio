@@ -9,9 +9,9 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 ---
 
 {filteredHeadings.length >= 3 && (
-  <aside class="hidden xl:block fixed left-8 top-1/2 -translate-y-1/2 w-60 z-30">
-    <nav class="panel p-4">
-      <h2 class="text-xs uppercase tracking-[0.22em] muted mb-3">
+  <aside class="hidden xl:block fixed left-8 top-1/2 -translate-y-1/2 w-56 z-30">
+    <nav class="p-4 border-l-2 border-[var(--accent)]">
+      <h2 class="kicker mb-3">
         On this page
       </h2>
       <ul class="space-y-2 text-sm">
@@ -72,7 +72,7 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
 <style>
   .toc-link {
     color: var(--muted);
-    transition: color 160ms ease, transform 160ms ease;
+    transition: color 150ms ease, transform 150ms ease;
   }
 
   .toc-link:hover {
@@ -80,9 +80,8 @@ const filteredHeadings = headings.filter(h => h.depth >= 2 && h.depth <= 3);
   }
 
   .toc-link[data-active="true"] {
-    color: var(--accent-2);
-    font-weight: 650;
-    transform: translateX(2px);
+    color: var(--accent);
+    font-weight: 600;
   }
 
   .line-clamp-2 {
