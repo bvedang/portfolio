@@ -1,0 +1,35 @@
+---
+title: "TraceLens"
+description: "An incident triage tool that takes a production log window and points you to the code path most likely involved."
+problem: "When a big Java service fails, engineers waste time jumping between logs, dashboards, and unfamiliar code with no clear place to start."
+approach: "I built it on top of CodeLens with log parsing, chunk retrieval, call-chain resolution, and LLM summaries tied back to real code paths."
+impact: "It turned the first step of incident debugging from a repo-wide hunt into a short, ranked investigation path."
+stack:
+  - Python
+  - LLMs
+  - CodeLens
+  - Qdrant
+  - Java
+featured: true
+order: 2
+draft: false
+---
+
+## Overview
+
+TraceLens sits on top of the code index. You give it a production failure window, and it gives you a plausible code-level trail to inspect first.
+
+## Core flow
+
+1. Ingest a log window around the failure.
+2. Retrieve relevant code chunks and nearby symbols from the CodeLens index.
+3. Resolve likely call paths and supporting dependencies.
+4. Generate a concise investigation summary grounded in the traced code path.
+
+## Why it matters
+
+The point is not to pretend the system found the root cause for you. The point is to remove the blank-page problem during incidents. Instead of starting with repo-wide search, you start with a ranked path through the code that already matches the runtime evidence.
+
+## Result
+
+TraceLens makes triage faster and less chaotic, especially when the on-call engineer is outside the part of the codebase they know best.

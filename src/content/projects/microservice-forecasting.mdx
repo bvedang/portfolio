@@ -1,9 +1,9 @@
 ---
 title: "GitHub Forecasting Service"
-description: "Predict GitHub repo growth. Three ML models compared. 85% accuracy."
-problem: "Predicting repo growth is hard. One model isn't enough."
-approach: "Three microservices: LSTM, Prophet, Statsmodels. Each runs independently in Docker."
-impact: "85% accuracy by combining models. LSTM wins short-term. Prophet wins seasonal patterns."
+description: "A forecasting app that compares three models to predict GitHub repo growth."
+problem: "Repo growth is noisy, and one model does not win every time."
+approach: "Built three separate forecasting services for LSTM, Prophet, and Statsmodels, then compared their predictions side by side in one UI."
+impact: "The combined setup reached about 85% accuracy and made it easier to see which model worked best for which pattern."
 stack:
   - LSTM
   - Prophet
@@ -14,24 +14,26 @@ stack:
 githubUrl: "https://github.com/bvedang/React-Flask-Microservice"
 image: "/images/microService.jpg"
 featured: true
-order: 2
+order: 5
 draft: false
 ---
 
-## What it does
+## Overview
 
-Input: GitHub repo. Output: predicted stars, forks, issues.
+This project predicts GitHub repo growth with three different forecasting models. Instead of betting on one approach, it lets you compare the outputs directly.
 
 ## Architecture
 
-Three microservices, each a different forecasting model:
+- LSTM for shorter-term sequence-heavy forecasting.
+- Prophet for stronger seasonality handling.
+- Statsmodels as a simpler statistical baseline.
 
-- **LSTM** — neural network, best for short-term
-- **Prophet** — handles seasonality well
-- **Statsmodels** — traditional stats baseline
+Each model runs as its own service in Docker, and the React frontend puts the predictions next to each other.
 
-Each runs in Docker. React frontend compares predictions side by side.
+## Why it matters
 
-## Results
+Different repos behave differently. A side-by-side setup made it easier to see where each model was useful instead of pretending one model solved everything.
 
-No single model wins every case. LSTM: short-term. Prophet: seasonal patterns. Combined: 85% accuracy.
+## Result
+
+The combined system reached about 85% accuracy, with LSTM doing better on short-term patterns and Prophet doing better where seasonality mattered.

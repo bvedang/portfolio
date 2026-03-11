@@ -3,14 +3,36 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import MinimalHeader from "../components/MinimalHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 
+const stack = [
+  "Java",
+  "Python",
+  "TypeScript",
+  "Go",
+  "Spring Boot",
+  "FastAPI",
+  "Next.js",
+  "PostgreSQL",
+  "AWS",
+  "Kafka",
+  "Kubernetes",
+  "Terraform",
+];
+
+const certifications = [
+  "AWS Developer",
+  "AWS Solutions Architect",
+  "AWS Cloud Practitioner",
+  "Deep Learning Specialization",
+];
+
 const workExperience = [
   {
     title: "Dec 2025 – Present",
     subtitle: "SDE II",
     organization: "Adyen",
     content:
-      "Working on Visa RTSI Disputes platform. Building reliable payment dispute resolution systems at scale.",
-    technologies: ["Java", "Kotlin", "PostgreSQL", "Kafka"],
+      "I’m working on Visa RTSI disputes. The job is to untangle lifecycle state from older ledger assumptions and make testing work in real scheme sandboxes.",
+    technologies: ["Java", "Jersey", "PostgreSQL", "RabbitMQ", "S3"],
     isCurrent: true,
   },
   {
@@ -19,8 +41,8 @@ const workExperience = [
     organization: "Protocoding",
     duration: "4 Months",
     content:
-      "Built Aivre mobile app. Led development of mobile features and backend integrations.",
-    technologies: ["React Native", "TypeScript", "Node.js"],
+      "I worked on Aivre. I got sketch rendering up to 120 FPS and cleaned up auth so the app could get through App Store review.",
+    technologies: ["React Native", "Go", "Next.js", "MongoDB", "AI SDK"],
   },
   {
     title: "June 2024 – Sept 2025",
@@ -28,8 +50,8 @@ const workExperience = [
     organization: "FIS",
     duration: "1 Year 4 Months",
     content:
-      "Built Case-whisperer and Finance Case-Manager platforms. Developed financial case management systems processing high-volume transactions.",
-    technologies: ["Java", "Spring Boot", "PostgreSQL", "AWS"],
+      "I built Case-whisperer and Finance Case-Manager. That meant LLM retrieval work on one side and case and transaction pipelines at 18M+ cases and 220M+ transactions a month on the other.",
+    technologies: ["Next.js", "Spring Boot", "FastAPI", "PostgreSQL", "Kafka", "EKS", "Terraform"],
   },
   {
     title: "Feb 2023 – May 2024",
@@ -37,8 +59,8 @@ const workExperience = [
     organization: "Opstra Tech",
     duration: "1 Year 4 Months",
     content:
-      "Built document search platform. Implemented search infrastructure and document processing pipelines.",
-    technologies: ["Python", "Elasticsearch", "React"],
+      "I built the document search platform. It cut retrieval from 45 minutes to under 5 and held up better during 3x traffic spikes.",
+    technologies: ["Python", "Elasticsearch", "SQS", "React"],
   },
   {
     title: "June 2019 – Dec 2020",
@@ -46,8 +68,8 @@ const workExperience = [
     organization: "Shaili Pharma Chem",
     duration: "1 Year 7 Months",
     content:
-      "Built inventory management system. React frontend, Flask backend. First production system I shipped.",
-    technologies: ["React", "Flask", "PostgreSQL"],
+      "I built an inventory system for the Purchase and Finance teams with role-based access control and real-time stock tracking.",
+    technologies: ["React", "Spring Boot", "PostgreSQL", "Okta"],
   },
 ];
 
@@ -56,21 +78,20 @@ const education = [
     title: "2021 – Dec 2022",
     subtitle: "MS Computer Science",
     organization: "Illinois Institute of Technology",
-    content: "Focused on machine learning and databases. GPA: 3.7",
+    content: "Master of Computer Science.",
   },
   {
     title: "2015 – May 2019",
     subtitle: "BS Computer Science",
     organization: "Parul University",
-    content:
-      "The fundamentals: algorithms, data structures, compilers, how computers actually work.",
+    content: "Bachelor of Technology in Computer Science.",
   },
 ];
 ---
 
 <BaseLayout
   title="About | Vedang Barhate"
-  description="Full-Stack Software Engineer with expertise in Java, Python, and modern web technologies."
+  description="Software engineer with experience in backend platforms, retrieval systems, and high-volume financial infrastructure."
 >
   <MinimalHeader />
 
@@ -79,22 +100,47 @@ const education = [
       <div class="max-w-6xl mx-auto">
         <p class="kicker">About</p>
         <p class="muted leading-relaxed mt-4 text-lg max-w-3xl">
-          Full-stack software engineer with a systems bias. I care about latency, reliability, and clean APIs. Lately I'm deep in eBPF and Linux internals — I write what I learn so it sticks.
+          I’m a software engineer who likes systems work. I care about latency, reliability, and APIs that stay easy to work with. Lately I’ve been building financial workflows, search-heavy platforms, and AI tools for engineers.
         </p>
 
         <div class="mt-6 flex flex-wrap gap-3">
-          <a class="btn btn-primary" href="mailto:vedangbarhate@gmail.com">
+          <a class="btn btn-primary" href="mailto:vedang.inbox@gmail.com">
             Email <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
-          <a class="btn btn-ghost" href="/VedangBarhate_resume.pdf" target="_blank" rel="noopener noreferrer">
-            Resume <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
+          <a class="btn btn-ghost" href="/Vedang_Barhate_Resume_2026.docx" target="_blank" rel="noopener noreferrer" download>
+            Resume (.docx) <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
           <a class="btn btn-ghost" href="https://github.com/bvedang" target="_blank" rel="noopener noreferrer">
             GitHub <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
-          <a class="btn btn-ghost" href="https://www.linkedin.com/in/vedang-barhate17/" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/barhate-vedang/" target="_blank" rel="noopener noreferrer">
             LinkedIn <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-16 sm:pb-20">
+      <div class="max-w-6xl mx-auto">
+        <hr class="rule mb-10" />
+        <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
+          <section>
+            <p class="kicker mb-6">Selected Stack</p>
+            <div class="flex flex-wrap gap-2">
+              {stack.map((item) => (
+                <span class="chip px-2.5 py-1 text-xs">{item}</span>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <p class="kicker mb-6">Certifications</p>
+            <div class="flex flex-wrap gap-2">
+              {certifications.map((item) => (
+                <span class="chip px-2.5 py-1 text-xs">{item}</span>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </section>

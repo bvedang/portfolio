@@ -1,0 +1,37 @@
+---
+title: "CodeLens"
+description: "A code context engine that gives AI coding tools the right method or class instead of dumping whole files into the prompt."
+problem: "AI coding tools fall apart on big Java repos when they pull in too much text and cannot follow symbols across modules."
+approach: "I parsed Java into smaller code chunks, resolved symbols through Gradle, jars, and the JDK, then indexed the results in Qdrant for fast retrieval."
+impact: "The result was better context for large codebases without bloated prompts or stale repo snapshots."
+stack:
+  - Python
+  - Tree-sitter
+  - Gradle
+  - Qdrant
+  - FastEmbed
+  - SQLite
+  - Docker
+featured: true
+order: 1
+draft: false
+---
+
+## Overview
+
+CodeLens is an indexing and retrieval layer for AI coding workflows. Instead of stuffing whole files into context, it breaks Java repos into smaller pieces so the model can pull just the part it needs.
+
+## Why this exists
+
+Most coding assistants miss in the same way. They grab too much shallow context and not enough build-aware context. That gets worse in Java monorepos once symbols cross module boundaries.
+
+## What it does
+
+- Parses Java into methods, fields, constructors, and class shells with Tree-sitter.
+- Resolves symbols across source sets, project dependencies, external jars, and the JDK.
+- Ranks the most useful chunks first instead of flooding the model with whole files.
+- Supports full rebuilds and file-level refreshes so the index stays current as the repo changes.
+
+## Result
+
+The system gives AI workflows smaller, better-grounded context windows and a much better starting point for navigation and explanation in large Java codebases.

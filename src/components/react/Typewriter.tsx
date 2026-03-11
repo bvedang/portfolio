@@ -7,9 +7,9 @@ interface TypewriterProps {
 export default function Typewriter({ isDark }: TypewriterProps) {
   const [text] = useTypewriter({
     words: [
-      'Full-Stack Software Engineer',
-      'Backend & Distributed Systems',
-      'React • Java • AWS',
+      'Software Engineer',
+      'Backend • Retrieval • Distributed Systems',
+      'Java • Python • AWS',
     ],
     loop: true,
     delaySpeed: 2000,

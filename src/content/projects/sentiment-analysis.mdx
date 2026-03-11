@@ -1,9 +1,9 @@
 ---
 title: "SVM vs BERT: Sentiment Analysis"
-description: "BERT keeps 92% accuracy on noisy text. SVM drops to 78%. Tested on 50k reviews."
-problem: "Real user text has typos and slang. Which model handles the mess?"
-approach: "50k movie reviews. Added controlled noise. Compared SVM and BERT accuracy."
-impact: "BERT: 92% on noisy data. SVM: 78%. Use BERT for user-generated content."
+description: "A comparison of SVM and BERT on noisy review text to see which one holds up better."
+problem: "Real user text is messy. Typos, slang, and missing punctuation can break simpler models fast."
+approach: "Trained SVM and BERT on 50k movie reviews, then added controlled noise to measure how much each model degraded."
+impact: "BERT stayed strong on noisy text while SVM dropped off much faster, which made the tradeoff clear."
 stack:
   - BERT
   - SVM
@@ -14,32 +14,25 @@ stack:
   - Python
 image: "/images/nlp.png"
 featured: true
-order: 3
+order: 6
 draft: false
 ---
 
-## Question
+## Overview
 
-How do sentiment models handle messy text? Typos, slang, missing punctuation.
+This project asks a simple question: what happens when sentiment models leave clean benchmark data and hit text that looks more like the real internet?
 
 ## Method
 
-1. IMDB dataset: 50k reviews
-2. Train SVM and BERT on clean data
-3. Add noise: typos, word swaps, missing punctuation
-4. Measure accuracy drop
+1. Start with the IMDB dataset of 50k reviews.
+2. Train both SVM and BERT on clean text.
+3. Add noise like typos, word swaps, and missing punctuation.
+4. Measure how accuracy changes.
 
-## Results
+## Result
 
-| Data Quality | SVM | BERT |
-|-------------|-----|------|
-| Clean | 95% | 95% |
-| 30% noisy | 78% | 92% |
-
-## Why BERT wins
-
-SVM uses word frequencies. Typo = unknown word = lost signal. BERT uses context. It infers "gret" means "great" from surrounding words.
+On clean data, both models performed well. Once the text got noisy, BERT held up much better while SVM dropped sharply.
 
 ## Takeaway
 
-User-generated content is messy. Use BERT. Computational cost is worth the accuracy.
+If the input text is user-generated and messy, the extra cost of BERT is usually worth it.

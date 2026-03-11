@@ -1,9 +1,9 @@
 ---
 title: "Expense Manager"
-description: "Log expenses. See where your money goes. Spot patterns fast."
-problem: "Bloated finance apps. I wanted something minimal that shows spending by category."
-approach: "React frontend, Flask backend, Chart.js for graphs."
-impact: "Found I was overspending on food delivery. Fixed it."
+description: "A simple expense tracker that shows where the money goes without getting in the way."
+problem: "A lot of finance apps try to do too much. I wanted something small that made spending patterns obvious."
+approach: "Built a React frontend, a Flask backend, and simple charts for category and month-by-month views."
+impact: "It made it easy to spot where the budget was leaking and fix it."
 stack:
   - React
   - Flask
@@ -14,20 +14,24 @@ githubUrl: "https://github.com/bvedang/expense-manager"
 liveUrl: "https://bvedang.github.io/expense-manager/"
 image: "/images/expenseManager.jpg"
 featured: true
-order: 1
+order: 4
 draft: false
 ---
 
+## Overview
+
+Expense Manager is a small personal finance app. The goal was simple: log expenses quickly, then make the trends easy to see.
+
 ## What it does
 
-Log expenses. See charts by category. Compare months.
+- Lets you log expenses with a category, date, and notes.
+- Shows category charts so spending patterns are obvious.
+- Makes it easy to compare one month against another.
 
-## Features
+## Why I built it
 
-- **Log expenses** with category, date, and notes
-- **Category charts** show where money goes
-- **Monthly view** to spot trends
+I wanted a finance tool that felt lightweight. Most apps I tried had too much ceremony for a basic daily habit.
 
-## Stack
+## Result
 
-React + Material-UI frontend. Flask API. SQLite storage. Chart.js for visualization.
+It gave me a clearer view of spending without the overhead of a heavier budgeting app.

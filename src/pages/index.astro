@@ -31,7 +31,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
             "@type": "WebPage",
             "@id": `${siteUrl}/#webpage`,
             url: siteUrl,
-            name: "Vedang Barhate — Full-Stack Software Engineer",
+            name: "Vedang Barhate — Software Engineer",
             isPartOf: { "@id": `${siteUrl}/#website` },
             mainEntity: { "@id": `${siteUrl}/#person` },
           },
@@ -41,11 +41,10 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
             name: "Vedang Barhate",
             url: siteUrl,
             image: `${siteUrl}/portfolio.png`,
-            jobTitle: "Full-Stack Software Engineer",
+            jobTitle: "Software Engineer",
             sameAs: [
               "https://github.com/bvedang",
-              "https://www.linkedin.com/in/vedang-barhate17/",
-              "https://www.instagram.com/vedang_barhate/",
+              "https://www.linkedin.com/in/barhate-vedang/",
             ],
           },
         ],
@@ -63,14 +62,14 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
           Vedang<span style="color: var(--accent);">.</span>
         </h1>
         <p class="muted leading-relaxed mt-6 text-lg max-w-2xl">
-          I build backend systems in Java and Go. I write about eBPF, Linux internals, and shipping reliable software.
+          I build backend systems, retrieval tools, and financial workflows. Most of my work is in Java, Go, Python, and TypeScript.
         </p>
         <p class="mt-4 max-w-2xl text-sm" style="font-family: var(--font-mono); color: var(--muted);">
-          Currently: building dispute systems at scale.
+          Right now: dispute systems at Adyen, plus code tools like CodeLens and TraceLens.
         </p>
 
         <div class="mt-8">
-          <a class="btn btn-primary" href="mailto:vedangbarhate@gmail.com">
+          <a class="btn btn-primary" href="mailto:vedang.inbox@gmail.com">
             Email <span aria-hidden="true" style="font-family: var(--font-mono);">&#8599;</span>
           </a>
         </div>

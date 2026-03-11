@@ -1,0 +1,42 @@
+---
+title: "Finance Case-Manager"
+description: "A case platform that went from MVP to 18M+ monthly cases and 220M+ monthly transactions across multiple tenants."
+problem: "We needed a new case-management foundation that could ship fast, handle a lot of traffic, and support queries DynamoDB was starting to fight us on."
+approach: "I built the Spring Boot base, the stream processing pipeline, the encryption layer, and the deployment flow across PostgreSQL, DynamoDB, Kinesis, DMS, S3, and EKS."
+impact: "We shipped the MVP in 8 weeks, pushed Kinesis to 150 TPS, cut encryption latency by 60%, and took sandbox deploy and test cycles from 20 minutes to 2."
+stack:
+  - Spring Boot
+  - Next.js
+  - PostgreSQL
+  - DynamoDB
+  - Kinesis
+  - AWS KMS
+  - Terraform
+  - EKS
+  - Docker
+featured: true
+order: 3
+draft: false
+---
+
+## Overview
+
+Finance Case-Manager was the backbone for a new financial operations workflow. It had to move fast like an MVP, but it also had to survive production traffic and changing requirements.
+
+## System constraints
+
+- Multi-tenant traffic with large swings in transaction volume.
+- Complex pagination and query patterns that pushed past DynamoDB's strengths.
+- PCI-sensitive data that needed low-latency encryption and solid operational controls.
+
+## What I built
+
+- The Spring Boot foundation for the greenfield service.
+- Stream processing over Kinesis for high-volume transaction ingestion.
+- A migration path from DynamoDB to PostgreSQL where richer query behavior mattered.
+- AWS KMS envelope encryption with key caching to cut latency.
+- Faster local and sandbox deployment loops with Docker-based automation and a local CDC setup.
+
+## Result
+
+The platform shipped quickly, scaled to production traffic, and stayed workable for developers and on-call engineers instead of turning into an MVP that needed to be rebuilt later.
