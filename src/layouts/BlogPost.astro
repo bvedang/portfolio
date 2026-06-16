@@ -17,8 +17,9 @@ interface Props {
 }
 
 const { frontmatter, headings = [] } = Astro.props;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
-const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage = frontmatter.image
     ? `${siteUrl}${frontmatter.image}`
     : `${siteUrl}/portfolio.png`;
@@ -42,12 +43,10 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString(
     title={`${frontmatter.title} | Vedang Barhate`}
     description={frontmatter.description}
     image={frontmatter.image || "/portfolio.png"}
+    imageAlt={`${frontmatter.title} article preview`}
     type="article"
 >
-    <head slot="head">
-        <link rel="canonical" href={canonicalUrl} />
-
-        <meta property="og:type" content="article" />
+    <Fragment slot="head">
         <meta
             property="article:published_time"
             content={frontmatter.pubDate.toISOString()}
@@ -80,13 +79,53 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString(
                 ).toISOString(),
                 author: {
                     "@type": "Person",
+                    "@id": `${siteUrl}/#person`,
                     name: "Vedang Barhate",
                     url: siteUrl,
                 },
+                publisher: {
+                    "@type": "Person",
+                    "@id": `${siteUrl}/#person`,
+                    name: "Vedang Barhate",
+                    url: siteUrl,
+                },
+                isPartOf: {
+                    "@type": "Blog",
+                    "@id": `${siteUrl}/blog/#blog`,
+                    name: "Vedang Barhate Blog",
+                },
+                keywords: frontmatter.tags,
                 mainEntityOfPage: canonicalUrl,
             })}
         />
-    </head>
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                    {
+                        "@type": "ListItem",
+                        position: 1,
+                        name: "Home",
+                        item: `${siteUrl}/`,
+                    },
+                    {
+                        "@type": "ListItem",
+                        position: 2,
+                        name: "Blog",
+                        item: `${siteUrl}/blog`,
+                    },
+                    {
+                        "@type": "ListItem",
+                        position: 3,
+                        name: frontmatter.title,
+                        item: canonicalUrl,
+                    },
+                ],
+            })}
+        />
+    </Fragment>
 
     <!-- Reading Progress Bar -->
     <div
@@ -154,7 +193,7 @@ const updatedDateFormatted = frontmatter.updatedDate?.toLocaleDateString(
                     {
                         frontmatter.tags.map((tag) => (
                             <a
-                                href={`/blog/tags/${tag}`}
+                                href={`/blog/tags/${encodeURIComponent(tag)}`}
                                 class="chip px-2.5 py-1 text-xs hover:border-[var(--accent)] hover:text-[var(--accent)] transition-colors"
                             >
                                 #{tag}

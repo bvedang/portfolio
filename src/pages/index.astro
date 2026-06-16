@@ -4,7 +4,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import MinimalHeader from "../components/MinimalHeader.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
 
 const blogPosts = (await getCollection("blog", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -15,7 +16,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
 ---
 
 <BaseLayout>
-  <head slot="head">
+  <Fragment slot="head">
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
@@ -26,6 +27,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
             "@id": `${siteUrl}/#website`,
             url: siteUrl,
             name: "Vedang Barhate Portfolio",
+            inLanguage: "en-US",
           },
           {
             "@type": "WebPage",
@@ -34,6 +36,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
             name: "Vedang Barhate — Software Engineer",
             isPartOf: { "@id": `${siteUrl}/#website` },
             mainEntity: { "@id": `${siteUrl}/#person` },
+            about: { "@id": `${siteUrl}/#person` },
           },
           {
             "@type": "Person",
@@ -42,15 +45,49 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft && d
             url: siteUrl,
             image: `${siteUrl}/portfolio.png`,
             jobTitle: "Software Engineer",
+            knowsAbout: [
+              "Backend engineering",
+              "Distributed systems",
+              "Retrieval systems",
+              "Financial infrastructure",
+              "Java",
+              "Go",
+              "Python",
+              "TypeScript",
+            ],
             sameAs: [
               "https://github.com/bvedang",
               "https://www.linkedin.com/in/barhate-vedang/",
             ],
           },
+          {
+            "@type": "ItemList",
+            "@id": `${siteUrl}/projects/#featured-projects`,
+            name: "Featured projects",
+            itemListElement: projects.slice(0, 3).map((project, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              url: `${siteUrl}/projects/${project.slug}`,
+              name: project.data.title,
+              description: project.data.description,
+            })),
+          },
+          {
+            "@type": "ItemList",
+            "@id": `${siteUrl}/blog/#recent-posts`,
+            name: "Recent writing",
+            itemListElement: blogPosts.map((post, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              url: `${siteUrl}/blog/${post.slug}`,
+              name: post.data.title,
+              description: post.data.description,
+            })),
+          },
         ],
       })}
     />
-  </head>
+  </Fragment>
 
   <MinimalHeader />
 

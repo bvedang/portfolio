@@ -87,18 +87,60 @@ const education = [
     content: "Bachelor of Technology in Computer Science.",
   },
 ];
+
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
 ---
 
 <BaseLayout
   title="About | Vedang Barhate"
   description="Software engineer with experience in backend platforms, retrieval systems, and high-volume financial infrastructure."
 >
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "ProfilePage",
+            "@id": `${siteUrl}/about/#webpage`,
+            url: `${siteUrl}/about`,
+            name: "About Vedang Barhate",
+            description: "Software engineer with experience in backend platforms, retrieval systems, and high-volume financial infrastructure.",
+            mainEntity: { "@id": `${siteUrl}/#person` },
+          },
+          {
+            "@type": "Person",
+            "@id": `${siteUrl}/#person`,
+            name: "Vedang Barhate",
+            url: siteUrl,
+            image: `${siteUrl}/portfolio.png`,
+            jobTitle: "Software Engineer",
+            alumniOf: education.map((school) => ({
+              "@type": "CollegeOrUniversity",
+              name: school.organization,
+            })),
+            knowsAbout: stack,
+            sameAs: [
+              "https://github.com/bvedang",
+              "https://www.linkedin.com/in/barhate-vedang/",
+            ],
+          },
+        ],
+      })}
+    />
+  </Fragment>
+
   <MinimalHeader />
 
   <main class="pt-20">
     <section class="px-6 py-10 sm:py-14">
       <div class="max-w-6xl mx-auto">
         <p class="kicker">About</p>
+        <h1 class="headline ink text-4xl sm:text-5xl lg:text-6xl mt-4">
+          Vedang Barhate<span style="color: var(--accent);">.</span>
+        </h1>
         <p class="muted leading-relaxed mt-4 text-lg max-w-3xl">
           I’m a software engineer who likes systems work. I care about latency, reliability, and APIs that stay easy to work with. Lately I’ve been building financial workflows, search-heavy platforms, and AI tools for engineers.
         </p>

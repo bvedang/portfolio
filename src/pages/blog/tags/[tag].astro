@@ -20,9 +20,43 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props;
+
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
+const tagUrl = `${siteUrl}/blog/tags/${encodeURIComponent(tag)}`;
 ---
 
 <BaseLayout title={`Posts tagged "${tag}" | Vedang Barhate`} description={`Blog posts about ${tag}`}>
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": `${tagUrl}/#webpage`,
+        url: tagUrl,
+        name: `Posts tagged ${tag}`,
+        description: `Blog posts about ${tag}`,
+        isPartOf: {
+          "@type": "Blog",
+          "@id": `${siteUrl}/blog/#blog`,
+          name: "Vedang Barhate Blog",
+          url: `${siteUrl}/blog`,
+        },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: posts.map((post, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `${siteUrl}/blog/${post.slug}`,
+            name: post.data.title,
+            description: post.data.description,
+          })),
+        },
+      })}
+    />
+  </Fragment>
+
   <MinimalHeader />
 
   <main class="pt-20">

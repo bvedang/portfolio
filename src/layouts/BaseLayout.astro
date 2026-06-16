@@ -5,6 +5,7 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   type?: string;
 }
 
@@ -12,11 +13,13 @@ const {
   title = "Vedang Barhate — Software Engineer",
   description = "Vedang Barhate — software engineer focused on backend platforms, retrieval systems, and reliable distributed software.",
   image = "/portfolio.png",
+  imageAlt = "Vedang Barhate portfolio preview",
   type = "website",
 } = Astro.props;
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
-const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://vedangbarhate.com';
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
 // Indexing control:
@@ -38,22 +41,27 @@ const shouldIndex =
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Vedang Barhate" />
+    <meta name="generator" content={Astro.generator} />
     <link rel="canonical" href={canonicalUrl} />
 
     {!shouldIndex && <meta name="robots" content="noindex,nofollow" />}
     {shouldIndex && <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />}
 
+    <meta property="og:site_name" content="Vedang Barhate" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content="Vedang Barhate portfolio preview" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@bvedang" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <link rel="icon" type="image/png" href="/portfolio.png" />
     <link rel="apple-touch-icon" href="/portfolio.png" />

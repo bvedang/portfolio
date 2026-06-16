@@ -7,12 +7,45 @@ import SiteFooter from "../../components/SiteFooter.astro";
 const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
 ---
 
 <BaseLayout
   title="Projects | Vedang Barhate"
   description="Selected work spanning code intelligence, incident triage, and large-scale financial systems."
 >
+  <Fragment slot="head">
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "@id": `${siteUrl}/projects/#webpage`,
+        url: `${siteUrl}/projects`,
+        name: "Projects | Vedang Barhate",
+        description: "Selected work spanning code intelligence, incident triage, and large-scale financial systems.",
+        isPartOf: {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          name: "Vedang Barhate",
+          url: siteUrl,
+        },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: projects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            url: `${siteUrl}/projects/${project.slug}`,
+            name: project.data.title,
+            description: project.data.description,
+          })),
+        },
+      })}
+    />
+  </Fragment>
+
   <MinimalHeader />
 
   <main class="pt-20">

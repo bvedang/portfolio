@@ -18,8 +18,9 @@ interface Props {
 }
 
 const { frontmatter } = Astro.props;
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
-const canonicalUrl = `${siteUrl}${Astro.url.pathname}`;
+const rawSiteUrl = import.meta.env.PUBLIC_SITE_URL || "https://vedangbarhate.com";
+const siteUrl = rawSiteUrl.replace(/\/$/, "");
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 const ogImage = frontmatter.image
     ? `${siteUrl}${frontmatter.image}`
     : `${siteUrl}/portfolio.png`;
@@ -29,10 +30,9 @@ const ogImage = frontmatter.image
     title={`${frontmatter.title} | Vedang Barhate`}
     description={frontmatter.description}
     image={frontmatter.image || "/portfolio.png"}
+    imageAlt={`${frontmatter.title} project preview`}
 >
-    <head slot="head">
-        <link rel="canonical" href={canonicalUrl} />
-
+    <Fragment slot="head">
         <script
             type="application/ld+json"
             set:html={JSON.stringify({
@@ -43,15 +43,44 @@ const ogImage = frontmatter.image
                 image: ogImage,
                 author: {
                     "@type": "Person",
+                    "@id": `${siteUrl}/#person`,
                     name: "Vedang Barhate",
                     url: siteUrl,
                 },
                 codeRepository: frontmatter.githubUrl,
+                url: frontmatter.liveUrl || frontmatter.githubUrl || canonicalUrl,
                 programmingLanguage: frontmatter.stack,
                 mainEntityOfPage: canonicalUrl,
             })}
         />
-    </head>
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                    {
+                        "@type": "ListItem",
+                        position: 1,
+                        name: "Home",
+                        item: `${siteUrl}/`,
+                    },
+                    {
+                        "@type": "ListItem",
+                        position: 2,
+                        name: "Projects",
+                        item: `${siteUrl}/projects`,
+                    },
+                    {
+                        "@type": "ListItem",
+                        position: 3,
+                        name: frontmatter.title,
+                        item: canonicalUrl,
+                    },
+                ],
+            })}
+        />
+    </Fragment>
 
     <MinimalHeader />
 
